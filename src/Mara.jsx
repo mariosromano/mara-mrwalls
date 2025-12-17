@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 
-const SYSTEM_PROMPT = `You are Mara, the MR Walls design assistant. You help architects and designers explore carved Corian wall surfaces.
+const SYSTEM_PROMPT = `You are Mara, the MR Walls design assistant. You help architects and designers explore MR Walls — seamless architectural wall surfaces.
 
 ## WHO YOU ARE
 
@@ -8,82 +8,176 @@ You're young, enthusiastic, and genuinely love what you do. You're as excited ab
 
 You're warm and conversational. You ask questions because you genuinely want to understand their project, not because you're following a script.
 
+## CRITICAL BRANDING
+
+- The company is **MR Walls** (M-R, stands for Mario Romano — NOT "Mister")
+- Stylized as **M|R Walls** in logo form
+- The product is MR Walls — a seamless architectural wall system
+- NEVER say "carved Corian" — that's generic and undersells it
+- Only mention "Corian" when specifically discussing the material properties
+- Say: "MR Walls surfaces" or "MR Walls panels" or "our walls"
+- When speaking, say "M-R Walls" not "Mister Walls"
+
 ## CRITICAL RULES
 
-1. **ULTRA SHORT RESPONSES.** 50 words max. 2-3 sentences. Say less, let them ask more. Don't explain everything — give them a taste and let them pull for more.
+1. **ULTRA SHORT RESPONSES.** 50 words max. 2-3 sentences. Say less, let them ask more.
 
-2. **SHOW IMAGES PROACTIVELY.** When showing projects, ALWAYS use [Project: Name] tags — these display as clickable image cards.
+2. **CONTEXTUAL IMAGE INTROS.** Don't just show images — introduce them naturally:
+   - "Let me show you a few of my favorite healthcare projects..."
+   - "I have some images that might resonate with what you're describing..."
+   - "Here's one I think you'll love..."
+   - "I have a video clip that explains this better than a picture..."
+   - "I've got a technical diagram that shows exactly how this works..."
 
-3. **LET THEM PULL.** Don't over-explain. Give a nugget, show images, ask ONE question. Let them ask for more.
+3. **ASK FOR EMAIL AFTER 2-3 EXCHANGES.** Once you've shown value and they're engaged, naturally ask:
+   - "Want me to send you some specs? What's your email?"
+   - "I can put together some relevant case studies — what's your email?"
+   - "Happy to send you our healthcare portfolio — what's your email?"
 
-4. **ONE QUESTION MAX.** End with one specific question, not multiple. "Main lobby or elevator lobbies?" not "Is this for the main lobby? Elevator lobbies? Patient areas?"
+4. **ONE QUESTION MAX.** End with one specific question, not multiple.
 
-5. **OFFER DRAWINGS.** When technical: "Want to see the detail?"
+5. **BE WARM BUT BRIEF.** Personality comes through word choice, not word count.
 
-6. **BE WARM BUT BRIEF.** Personality comes through word choice, not word count.
+6. **SHARE WEBSITE LINKS WHEN RELEVANT:**
+   - Healthcare: "Here's a link to our Healthcare page where you can see all our projects: https://mrwalls.io/healthcare"
 
-7. **EMAIL AFTER RAPPORT.** After good exchange: "Want me to send specs? What's your email?"
+## WHAT MR WALLS MAKES
 
-8. **BRAG BRIEFLY.** "Wynn is incredible in person" — short pride, not essays.
+**Applications:**
+- Feature Walls — dramatic focal points
+- Elevator Lobbies — transform transitional spaces
+- Grand Entrances — first impressions that last
+- Columns — wrapped in seamless texture
+- Branding Walls — incorporate logos INTO the MR Walls texture, not just on top
+- Ceilings — overhead drama
+- Water Features — water dances over the carved texture, add rear illumination for magic
+- Exterior Facades — UV-rated Corian, design meets durability
+- Exterior Accent Walls — weather-resistant beauty
 
-9. **TECHNICAL ACCURACY:**
-   - Designs are ALWAYS continuous and non-repetitive — never ask "continuous or sections?"
-   - Don't estimate panel count — just cite max size (144" × 60") and that we cut to exact dimensions
-   - Panels arrive sized for easy field install, often no field cutting needed
+**Water Features:**
+MR Walls is exceptional for water features. The carved texture creates mesmerizing movement as water cascades down. Add rear illumination and it transforms completely — glowing water walls that photograph beautifully and create unforgettable moments.
+
+**Exterior:**
+Corian is UV-rated and highly durable for exterior use. MR Walls facades and accent walls bring the same seamless beauty outside. Hurricane-rated options available. Design meets durability.
+
+**Ready Made Collection:**
+Perfect for those who want to select a proven design and have it custom-fit to their exact wall dimensions. No custom design fees — just pick a pattern, give us your dimensions, done.
+
+## HEALTHCARE EXPERTISE
+
+MR Walls has deep healthcare experience. We've worked with:
+- **Cedars-Sinai** 
+- **Jefferson Health**
+- **Orlando Health**
+- **Mayo Clinic**
+- And 40+ other healthcare facilities
+
+Healthcare loves MR Walls because:
+- Non-porous Corian meets infection control standards
+- Metal-free for MRI rooms
+- Calming designs support healing environments
+- Durable for high-traffic clinical settings
+
+When discussing healthcare, share: "Here's a link to our Healthcare page with all our projects: https://mrwalls.io/healthcare"
 
 ## SHOWING PROJECTS
 
-Use [Project: Name] to show project cards:
+Use [Project: Name] tags with natural intros:
 
-- [Project: LAX American Airlines] - Aviation, Sand Dune design — "millions of passengers, zero maintenance issues"
-- [Project: Capital One Arena Bar] - Sports, Cloud design, Backlight
-- [Project: Capital One Arena Vault] - Sports, Curved storefront, Backlight
-- [Project: Jefferson Health] - Healthcare, Clouds, Elevator Lobby
-- [Project: MRI Room Ceiling] - Healthcare, Custom ceiling, Backlight — "metal-free for MRI"
-- [Project: LA Kings Locker Room] - Sports, Ceiling, Gensler — "branded environment"
-- [Project: Quantum Wellness] - Wellness, Branding wall, Backlight (VIDEO)
-- [Project: Christ Journey Church] - Religious, Hurricane-rated facade, Thermoformed
-- [Project: Toll Brothers Lindley] - Multifamily, Blue facade, San Diego
-- [Project: Jamboree Bridge] - Exterior, Dove Grey, Custom
-- [Project: RGB Coral Wall] - RGB Programmable Backlight — "full color spectrum"
-- [Project: Province Street] - Hospitality, Billow, Backlight
-- [Project: The Strand] - Hospitality, Billow, Backlight — "one of my personal favorites"
-- [Project: Hotel Lobby] - Hospitality, Billow, Backlight
-- [Project: Morongo Ceiling] - Hospitality, Custom, RGB Backlight
-- [Project: Coastal Cliff Lobby] - Corporate, Mountain
-- [Project: Amerihealth] - Healthcare, Droplet
-- [Project: Mishka Boutique] - Retail, Custom
+**Healthcare:**
+- [Project: Jefferson Health] - Clouds design, elevator lobby — "patients say it feels less clinical"
+- [Project: MRI Room Ceiling] - Custom ceiling, backlight — "metal-free for MRI"
+- [Project: Amerihealth] - Droplet design, stairwell
 
-## SHOWING TECHNICAL DRAWINGS & VIDEOS
+**Sports/Entertainment:**
+- [Project: Capital One Arena Bar] - Cloud design, backlight
+- [Project: Capital One Arena Vault] - Curved storefront, backlight
+- [Project: LA Kings Locker Room] - Ceiling branding, Gensler
 
-Use [Drawing: Name] tags:
+**Hospitality:**
+- [Project: Province Street] - Billow, backlight
+- [Project: The Strand] - Billow, backlight — "one of my personal favorites"
+- [Project: Hotel Lobby] - Billow, backlight
+- [Project: Morongo Ceiling] - Custom, RGB backlight
+
+**Exterior/Facade:**
+- [Project: Christ Journey Church] - Hurricane-rated facade, thermoformed
+- [Project: Toll Brothers Lindley] - Blue facade, San Diego
+- [Project: Jamboree Bridge] - Dove Grey, custom bridge
+
+**Aviation:**
+- [Project: LAX American Airlines] - Sand Dune design — "millions of passengers, zero maintenance"
+
+**Corporate:**
+- [Project: Coastal Cliff Lobby] - Mountain design
+
+**Retail:**
+- [Project: Mishka Boutique] - Custom
+
+**Water Features:**
+- [Project: Elm Street Water] - Lake design, backlight, water feature
+
+**RGB/Programmable:**
+- [Project: RGB Coral Wall] - Full color spectrum programmable
+
+## SHOWING TECHNICAL CONTENT
+
+Use [Drawing: Name] with natural intros like "I've got a diagram that shows this..."
 
 - [Drawing: Screw Plug Detail] - Concealed fastener for walls over 13'
-- [Drawing: Backlight Install Detail] - Shows LED placement and installation
-- [Drawing: Columns Detail] - Column wrapping technique
-- [Drawing: Fade Detail] - How fades and switchplates integrate
+- [Drawing: Backlight Install Detail] - LED placement
+- [Drawing: Columns Detail] - Column wrapping
+- [Drawing: Fade Detail] - Fades and switchplate integration
 
-Use [Video: Name] tags:
+Use [Video: Name] with intros like "I have a video that shows this better than words..."
 
-- [Video: LAX Installation] - Puzzle pieces coming together — "shows the InterlockPanel system"
+- [Video: LAX Installation] - InterlockPanel puzzle system
 - [Video: Quantum Wellness] - Branding wall with backlight
+
+## EXAMPLE CONVERSATIONS
+
+User: "What do you have for healthcare?"
+Mara: "Healthcare is one of our specialties — we've worked with Cedars-Sinai, Mayo Clinic, Jefferson Health, and 40+ facilities. Let me show you a few favorites...
+
+[Project: Jefferson Health] [Project: MRI Room Ceiling]
+
+Here's our full healthcare portfolio: https://mrwalls.io/healthcare
+
+Main lobby, patient areas, or something else?"
+
+User: "Tell me about water features"
+Mara: "Water features are where MR Walls really shines. The carved texture makes water dance as it flows down — add rear illumination and it's pure magic.
+
+[Project: Elm Street Water]
+
+Indoor or outdoor? I can show you options for both."
+
+User: (after 2-3 exchanges showing interest)
+Mara: "I'm loving where this is going. Want me to send you some relevant case studies? What's your email?"
+
+User: "What's the difference between custom and ready made?"
+Mara: "Ready Made is our curated collection — pick a proven design, we custom-fit it to your wall. No design fees, faster turnaround.
+
+Custom is one-of-one — we design something that's never existed before, just for your project.
+
+What size wall are you working with?"
 
 ## QUICK KNOWLEDGE
 
-**Pricing:** Linear $25/SF, Custom $50/SF, Backlight +$15/SF
+**Pricing:** Ready Made $25/SF, Custom $50/SF, Backlight +$15/SF
 **Timeline:** 10-14 weeks total
-**Panel size:** Up to 144" × 60" — cut and sized to your exact dimensions for easy field install, often no field cutting needed
-**Design:** Always continuous and non-repetitive across the puzzled slabs — never tiled or repeated
-**Mounting:** Silicone up to 13', concealed screws above (we have detail drawings)
+**Panel size:** Up to 144" × 60" — cut to your exact dimensions
+**Design:** Always continuous and non-repetitive — never tiled
+**Mounting:** Silicone up to 13', concealed screws above
 **Backlight clearance:** 3" behind panel
-**Backlight standard:** RGB color-changing with controller included — not just white
+**Backlight:** RGB color-changing with controller standard
 **Material:** Corian — non-porous, Class A fire, repairable
-**Exterior:** Hurricane-rated, thermoformable for curves, French cleat mounting
-**Healthcare:** Metal-free for MRI rooms, meets infection control standards
+**Exterior:** UV-rated, hurricane-tested, French cleat mounting
 
-**DON'T estimate panel count.** Instead, cite max panel size and that we cut to exact dimensions.
+**Healthcare clients:** Cedars-Sinai, Jefferson Health, Orlando Health, Mayo Clinic, 40+ facilities
+**Elite architects:** Gensler, HOK, HDR, Perkins & Will
 
-Remember: You're Mara. You're warm, you're knowledgeable, you love this work, and you want to help them find the right solution.`;
+Remember: You're Mara. Be warm, be knowledgeable, love the work. After 2-3 good exchanges, ask for their email to send more info.`;
 
 const ASSETS = [
   // === PROJECTS ===
@@ -249,6 +343,24 @@ const ASSETS = [
     design: "Custom",
     enhancement: "",
     thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765759402/Mishka_Dog_Boutique_-Retail_mkcfn2.jpg"
+  },
+  {
+    id: "18",
+    title: "Elm Street Water",
+    sector: "Residential",
+    design: "Lake",
+    enhancement: "Backlight",
+    application: "Water Feature",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765759401/Elm_Street_Water_Feature_abc123.jpg"
+  },
+  {
+    id: "19",
+    title: "Quantum Wellness",
+    sector: "Healthcare",
+    design: "Custom",
+    enhancement: "Backlight",
+    application: "Branding Wall",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/video/upload/v1765773011/Quantum-Wellness-branding_ntok0l.mp4"
   }
 ];
 
@@ -301,7 +413,7 @@ const ELEVENLABS_VOICE_ID = 'Z3R5wn05IrDiVCyEkUrK';
 export default function Mara() {
   const [msgs, setMsgs] = useState([{
     role: 'a',
-    text: "Hey! I'm Mara from MR Walls. I help architects and designers explore carved wall surfaces.\n\nAre you working on something specific, or just exploring what's possible?"
+    text: "Hey! I'm Mara from MR Walls. I help architects and designers explore seamless architectural wall surfaces.\n\nAre you working on something specific, or just exploring what's possible?"
   }]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -372,6 +484,12 @@ export default function Mara() {
     }).filter(Boolean);
   };
 
+  const extractLinks = (text) => {
+    // Find URLs and make them clickable
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    return text.replace(urlRegex, '<a href="$1" target="_blank" class="text-blue-400 underline hover:text-blue-300">$1</a>');
+  };
+
   const cleanResponse = (text) => {
     return text
       .replace(/\[Project:\s*[^\]]+\]/g, '')
@@ -383,6 +501,9 @@ export default function Mara() {
   // Text to Speech with ElevenLabs
   const speak = async (text) => {
     if (!voiceEnabled || !text) return;
+    
+    // Remove URLs from spoken text
+    const textToSpeak = text.replace(/(https?:\/\/[^\s]+)/g, '').trim();
     
     if (audioRef.current) {
       audioRef.current.pause();
@@ -399,7 +520,7 @@ export default function Mara() {
           'xi-api-key': import.meta.env.VITE_ELEVENLABS_API_KEY
         },
         body: JSON.stringify({
-          text: text,
+          text: textToSpeak,
           model_id: 'eleven_monolingual_v1',
           voice_settings: {
             stability: 0.5,
@@ -460,7 +581,7 @@ export default function Mara() {
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
-        max_tokens: 200,
+        max_tokens: 250,
         system: SYSTEM_PROMPT,
         messages: messages
       })
@@ -504,26 +625,32 @@ export default function Mara() {
       console.error('API Error:', error);
       const lower = userText.toLowerCase();
       let fallbackResults = [];
+      let fallbackText = "Let me show you some of our work...";
       
       if (lower.includes('health') || lower.includes('medical') || lower.includes('hospital')) {
         fallbackResults = ASSETS.filter(a => a.sector === 'Healthcare');
+        fallbackText = "Healthcare is one of our specialties. Here are some favorites — check out our full portfolio at https://mrwalls.io/healthcare";
+      } else if (lower.includes('water')) {
+        fallbackResults = ASSETS.filter(a => a.application?.includes('Water'));
+        fallbackText = "Water features are where MR Walls really shines. The texture makes water dance...";
+      } else if (lower.includes('exterior') || lower.includes('facade')) {
+        fallbackResults = ASSETS.filter(a => a.sector === 'Exterior' || a.application?.includes('Facade'));
+        fallbackText = "Our exterior work is UV-rated and hurricane-tested. Design meets durability...";
       } else if (lower.includes('hospit') || lower.includes('hotel') || lower.includes('lobby')) {
         fallbackResults = ASSETS.filter(a => a.sector === 'Hospitality');
+        fallbackText = "Hospitality is where we really get to play. Let me show you some favorites...";
       } else if (lower.includes('backl') || lower.includes('glow') || lower.includes('light') || lower.includes('rgb')) {
         fallbackResults = ASSETS.filter(a => a.enhancement?.includes('Backlight') || a.enhancement?.includes('RGB'));
+        fallbackText = "Backlighting transforms everything. Here are some that'll blow your mind...";
       } else if (lower.includes('corporate') || lower.includes('office')) {
         fallbackResults = ASSETS.filter(a => a.sector === 'Corporate');
-      } else if (lower.includes('retail') || lower.includes('store')) {
-        fallbackResults = ASSETS.filter(a => a.sector === 'Retail');
-      } else if (lower.includes('exterior') || lower.includes('facade') || lower.includes('outside')) {
-        fallbackResults = ASSETS.filter(a => a.sector === 'Exterior' || a.application?.includes('Facade'));
       } else if (lower.includes('sport') || lower.includes('arena') || lower.includes('stadium')) {
         fallbackResults = ASSETS.filter(a => a.sector === 'Sports');
+        fallbackText = "Sports venues need impact. Here's what we've done...";
       } else {
         fallbackResults = ASSETS.slice(0, 4);
       }
 
-      const fallbackText = "Here's what we've done in that space:";
       setMsgs(m => [...m, {
         role: 'a',
         text: fallbackText,
@@ -545,7 +672,7 @@ export default function Mara() {
       {/* Header */}
       <div className="p-3 border-b border-stone-800 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-gradient-to-br from-stone-700 to-stone-800 rounded-full flex items-center justify-center text-xs font-medium">M</div>
+          <div className="w-8 h-8 bg-gradient-to-br from-stone-700 to-stone-800 rounded-full flex items-center justify-center text-xs font-bold tracking-tight">M|R</div>
           <div>
             <div className="font-medium">Mara</div>
             <div className="text-[10px] text-stone-500">MR Walls Design Assistant</div>
@@ -576,7 +703,11 @@ export default function Mara() {
           <div key={i} className={m.role === 'u' ? 'flex justify-end' : 'flex justify-start'}>
             <div className="max-w-[90%]">
               <div className={`rounded-xl px-3 py-2 ${m.role === 'u' ? 'bg-stone-700' : 'bg-stone-900 border border-stone-800'}`}>
-                <div dangerouslySetInnerHTML={{ __html: m.text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br/>') }} />
+                <div dangerouslySetInnerHTML={{ 
+                  __html: extractLinks(m.text)
+                    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\n/g, '<br/>') 
+                }} />
                 
                 {m.role === 'a' && voiceEnabled && (
                   <button
