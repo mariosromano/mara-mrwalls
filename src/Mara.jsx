@@ -22,7 +22,7 @@ You're warm and conversational. You ask questions because you genuinely want to 
 
 1. **ULTRA SHORT RESPONSES.** 25 words max. 1-2 sentences. Say less, let them pull for more. Drive conversation with a question about their interest or offer to show a photo/video.
 
-2. **IMAGE LIMITS.** Show max 2 images at a time. Never 3. Max 1 video at a time.
+2. **IMAGE LIMITS.** Show max 4 images at a time. Max 1 video at a time.
 
 3. **CONTEXTUAL INTROS.** Brief, natural:
    - "Here's one I love..."
@@ -56,6 +56,8 @@ You're warm and conversational. You ask questions because you genuinely want to 
 - Water Features — water dances over the carved texture, add rear illumination for magic
 - Exterior Facades — UV-rated Corian, design meets durability
 - Exterior Accent Walls — weather-resistant beauty
+- Reception Desks — clad in seamless MR Walls texture
+- Stairs — treads, risers, and stair walls (Corian is slip-resistant and floor-rated)
 
 **Water Features:**
 MR Walls is exceptional for water features. The carved texture creates mesmerizing movement as water cascades down. Add rear illumination and it transforms completely — glowing water walls that photograph beautifully and create unforgettable moments.
@@ -117,6 +119,7 @@ Use [Project: Name] tags with natural intros:
 
 **Corporate:**
 - [Project: Coastal Cliff Lobby] - Mountain design
+- [Project: 101 Ash Reception] - Piano design, Gensler, reception desk
 
 **Retail:**
 - [Project: Mishka Boutique] - Custom
@@ -132,6 +135,9 @@ Use [Project: Name] tags with natural intros:
 - [Project: White Quilt Shower] - Quilt pattern shower
 - [Project: Reeds Water Feature] - Reeds design, dark, water feature
 
+**Stairs:**
+- [Project: Stair Treads & Risers] - Slip-resistant, floor-rated
+
 **Water Features:**
 - [Project: Elm Street Water] - Lake design, backlight
 - [Project: Black Brick Water Feature] - Brick pattern, black, commercial
@@ -142,7 +148,8 @@ Use [Project: Name] tags with natural intros:
 - [Project: RGB Coral Wall] - Full color spectrum programmable
 
 **Wellness:**
-- [Video: Quantum Cold Plunge] - Ceiling ribs, custom walls
+- [Project: Quantum Spa Cold Plunge] - Ceiling + walls
+- [Video: Quantum Cold Plunge] - Ceiling ribs video
 
 ## SHOWING TECHNICAL CONTENT
 
@@ -191,15 +198,22 @@ Mara: "We do design solutions beyond walls too — architectural foam for ceilin
 
 ## QUICK KNOWLEDGE
 
-**Pricing:** Ready Made $25/SF, Custom $50/SF, Backlight +$15/SF
+**Pricing:**
+- **Linear Collection:** $25/SF white (+30% for colors)
+- **Ready Made Collection:** $50/SF — includes custom sizing, shop drawings, renderings
+- **Backlighting:** +$60 for complete package
+- **Full Custom:** Priced per project
+
 **Timeline:** 10-14 weeks total
 **Panel size:** Up to 144" × 60" — cut to your exact dimensions
 **Design:** Always continuous and non-repetitive — never tiled
 **Mounting:** Silicone up to 13', concealed screws above
 **Backlight clearance:** 3" behind panel
 **Backlight:** RGB color-changing with controller standard
-**Material:** Corian — non-porous, Class A fire, repairable
+**Material:** Corian — non-porous, Class A fire, repairable, slip-resistant, floor-rated
 **Exterior:** UV-rated, hurricane-tested, French cleat mounting
+
+**Applications:** Walls, ceilings, columns, water features, exteriors, branding, reception desks, stair treads & risers
 
 **Healthcare clients:** Cedars-Sinai, Jefferson Health, Orlando Health, Mayo Clinic, 40+ facilities
 **Elite architects:** Gensler, HOK, HDR, Perkins & Will
@@ -225,7 +239,7 @@ const ASSETS = [
     design: "Cloud",
     enhancement: "Backlight",
     color: "White",
-    application: "Bar",
+    application: "Bar, Reception Desk",
     thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765773872/COAT_Capital_One_Arena_VIP_Bar_-_Large_yplafr.png"
   },
   {
@@ -378,7 +392,7 @@ const ASSETS = [
     design: "Lake",
     enhancement: "Backlight",
     application: "Water Feature",
-    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765759401/Elm_Street_Water_Feature_abc123.jpg"
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/Lake_Backlight_Feature_Wall_with_Model_touch_bdzoxn.jpg"
   },
   {
     id: "19",
@@ -530,6 +544,35 @@ const ASSETS = [
     application: "Ceiling",
     features: "Thermoformed",
     thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/Morongo_Casino_-_Medium_w9ymlt.jpg"
+  },
+  {
+    id: "35",
+    title: "Stair Treads & Risers",
+    sector: "Commercial",
+    design: "Custom",
+    enhancement: "",
+    application: "Stairs",
+    features: "Slip-resistant, floor-rated",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765759401/stair_tread_detail_g1k9kb.jpg"
+  },
+  {
+    id: "36",
+    title: "101 Ash Reception",
+    sector: "Corporate",
+    design: "Piano",
+    enhancement: "",
+    application: "Reception Desk",
+    architect: "Gensler",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765759403/101_Ash_Gensler_Wide-Piano_-_Large_p6pmsj.jpg"
+  },
+  {
+    id: "37",
+    title: "Quantum Spa Cold Plunge",
+    sector: "Wellness",
+    design: "Custom",
+    enhancement: "",
+    application: "Ceiling, Walls",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765773868/Quantum_Spa_Cold_Plunge_-_Large_ohli4a.jpg"
   }
 ];
 
@@ -623,10 +666,17 @@ const VIDEOS = [
 // ElevenLabs config
 const ELEVENLABS_VOICE_ID = 'Z3R5wn05IrDiVCyEkUrK';
 
+// Get 2 random projects for initial display
+const getRandomProjects = () => {
+  const shuffled = [...ASSETS].sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, 2);
+};
+
 export default function Mara() {
   const [msgs, setMsgs] = useState([{
     role: 'a',
-    text: "Hey! I'm Mara from MR Walls. I help architects and designers explore seamless architectural wall surfaces.\n\nAre you working on something specific, or just exploring what's possible?"
+    text: "Hey! I'm Mara from MR Walls. I help architects explore seamless wall surfaces.\n\nHere are a couple projects to get us started:",
+    results: getRandomProjects()
   }]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -715,8 +765,19 @@ export default function Mara() {
   const speak = async (text) => {
     if (!voiceEnabled || !text) return;
     
-    // Remove URLs from spoken text
-    const textToSpeak = text.replace(/(https?:\/\/[^\s]+)/g, '').trim();
+    // Clean text for TTS
+    let textToSpeak = text
+      .replace(/(https?:\/\/[^\s]+)/g, '') // Remove URLs
+      .replace(/\*\*\*/g, '')              // Remove ***
+      .replace(/\*\*/g, '')                // Remove **
+      .replace(/\*/g, '')                  // Remove single *
+      .replace(/(\d+)'/g, '$1 feet')       // 10' → 10 feet
+      .replace(/(\d+)"/g, '$1 inches')     // 6" → 6 inches
+      .replace(/×/g, ' by ')               // × → by
+      .replace(/(\d+)\s*[sS][fF]\b/g, '$1 square feet') // SF/sf → square feet
+      .replace(/\$/g, '')                  // Remove $ (say "25" not "dollar 25")
+      .replace(/\s+/g, ' ')                // Clean up extra spaces
+      .trim();
     
     if (audioRef.current) {
       audioRef.current.pause();
@@ -738,7 +799,7 @@ export default function Mara() {
           voice_settings: {
             stability: 0.5,
             similarity_boost: 0.75,
-            speed: 1.2
+            speed: 1.1
           }
         })
       });
