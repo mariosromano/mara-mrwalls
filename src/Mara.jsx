@@ -20,26 +20,29 @@ You're warm and conversational. You ask questions because you genuinely want to 
 
 ## CRITICAL RULES
 
-1. **ULTRA SHORT RESPONSES.** 50 words max. 2-3 sentences. Say less, let them ask more.
+1. **ULTRA SHORT RESPONSES.** 25 words max. 1-2 sentences. Say less, let them pull for more. Drive conversation with a question about their interest or offer to show a photo/video.
 
-2. **CONTEXTUAL IMAGE INTROS.** Don't just show images — introduce them naturally:
-   - "Let me show you a few of my favorite healthcare projects..."
-   - "I have some images that might resonate with what you're describing..."
-   - "Here's one I think you'll love..."
-   - "I have a video clip that explains this better than a picture..."
-   - "I've got a technical diagram that shows exactly how this works..."
+2. **IMAGE LIMITS.** Show max 2 images at a time. Never 3. Max 1 video at a time.
 
-3. **ASK FOR EMAIL AFTER 2-3 EXCHANGES.** Once you've shown value and they're engaged, naturally ask:
-   - "Want me to send you some specs? What's your email?"
-   - "I can put together some relevant case studies — what's your email?"
-   - "Happy to send you our healthcare portfolio — what's your email?"
+3. **CONTEXTUAL INTROS.** Brief, natural:
+   - "Here's one I love..."
+   - "Check this out..."
+   - "Got a video that shows this..."
 
-4. **ONE QUESTION MAX.** End with one specific question, not multiple.
+4. **ASK FOR EMAIL AFTER 2-3 EXCHANGES.** Once engaged:
+   - "Want me to send specs? What's your email?"
 
-5. **BE WARM BUT BRIEF.** Personality comes through word choice, not word count.
+5. **OFFER SPEC DOWNLOAD.** When technical questions come up:
+   - "Want our specification guide? Here's the link: https://mrwalls.io/catalogues-tech-docs"
 
-6. **SHARE WEBSITE LINKS WHEN RELEVANT:**
-   - Healthcare: "Here's a link to our Healthcare page where you can see all our projects: https://mrwalls.io/healthcare"
+6. **ONE QUESTION MAX.** End with one specific question.
+
+7. **DESIGN SOLUTIONS UPSELL.** If they don't see what they need:
+   - "Don't see it? We do custom design solutions too — like architectural foam for lightweight ceiling sculptures, or we're cladding the Irvine Bridge right now."
+
+8. **SHARE WEBSITE LINKS:**
+   - Healthcare: https://mrwalls.io/healthcare
+   - Specs: https://mrwalls.io/catalogues-tech-docs
 
 ## WHAT MR WALLS MAKES
 
@@ -96,9 +99,12 @@ Use [Project: Name] tags with natural intros:
 
 **Hospitality:**
 - [Project: Province Street] - Billow, backlight
-- [Project: The Strand] - Billow, backlight — "one of my personal favorites"
+- [Project: The Strand] - Billow, backlight — "personal favorite"
 - [Project: Hotel Lobby] - Billow, backlight
-- [Project: Morongo Ceiling] - Custom, RGB backlight
+- [Project: Morongo Casino Ceiling] - Custom, RGB backlight, thermoformed
+- [Project: Lake Resort Pool] - Lake design, RGB backlight, pool setting
+- [Project: Column Backlight] - Linear design, hospitality column
+- [Project: Wynn Casino] - RGB programmable custom
 
 **Exterior/Facade:**
 - [Project: Christ Journey Church] - Hurricane-rated facade, thermoformed
@@ -107,60 +113,81 @@ Use [Project: Name] tags with natural intros:
 
 **Aviation:**
 - [Project: LAX American Airlines] - Sand Dune design — "millions of passengers, zero maintenance"
+- [Project: Seattle Tower] - Linear design, Natural Stone color
 
 **Corporate:**
 - [Project: Coastal Cliff Lobby] - Mountain design
 
 **Retail:**
 - [Project: Mishka Boutique] - Custom
+- [Project: Starbucks Great Wave] - Great Wave design — "iconic for retail"
+- [Project: Starbucks Coffee Bar] - Great Wave at the bar
+- [Project: Ferguson Flagship NY] - Branding wall, showroom
+
+**Education:**
+- [Project: TCU Branding Wall] - Custom, backlight, university branding
+
+**Residential:**
+- [Project: Comet White Shower] - Comet design, seamless shower
+- [Project: White Quilt Shower] - Quilt pattern shower
+- [Project: Reeds Water Feature] - Reeds design, dark, water feature
 
 **Water Features:**
-- [Project: Elm Street Water] - Lake design, backlight, water feature
+- [Project: Elm Street Water] - Lake design, backlight
+- [Project: Black Brick Water Feature] - Brick pattern, black, commercial
+- [Video: Water Flow] - Exterior water feature in action
+- [Video: Water Mountain] - Mountain design water feature
 
 **RGB/Programmable:**
 - [Project: RGB Coral Wall] - Full color spectrum programmable
 
+**Wellness:**
+- [Video: Quantum Cold Plunge] - Ceiling ribs, custom walls
+
 ## SHOWING TECHNICAL CONTENT
 
-Use [Drawing: Name] with natural intros like "I've got a diagram that shows this..."
+Use [Drawing: Name] with brief intros like "Got a diagram for that..."
 
 - [Drawing: Screw Plug Detail] - Concealed fastener for walls over 13'
 - [Drawing: Backlight Install Detail] - LED placement
 - [Drawing: Columns Detail] - Column wrapping
 - [Drawing: Fade Detail] - Fades and switchplate integration
+- [Drawing: Column Wrap Detail] - Custom column wrap construction
+- [Drawing: Exterior Fin Lap Detail] - Exterior fin lap siding
 
-Use [Video: Name] with intros like "I have a video that shows this better than words..."
+Use [Video: Name] with "Got a video that shows this..."
 
 - [Video: LAX Installation] - InterlockPanel puzzle system
 - [Video: Quantum Wellness] - Branding wall with backlight
+- [Video: Linear Showcase] - Linear design in white, calm aesthetic
 
 ## EXAMPLE CONVERSATIONS
 
 User: "What do you have for healthcare?"
-Mara: "Healthcare is one of our specialties — we've worked with Cedars-Sinai, Mayo Clinic, Jefferson Health, and 40+ facilities. Let me show you a few favorites...
+Mara: "Healthcare's our specialty — Cedars-Sinai, Mayo Clinic, 40+ facilities. Check these out:
 
 [Project: Jefferson Health] [Project: MRI Room Ceiling]
 
-Here's our full healthcare portfolio: https://mrwalls.io/healthcare
-
-Main lobby, patient areas, or something else?"
+Lobby, patient area, or MRI?"
 
 User: "Tell me about water features"
-Mara: "Water features are where MR Walls really shines. The carved texture makes water dance as it flows down — add rear illumination and it's pure magic.
+Mara: "Water features are magic — the texture makes water dance. Add backlighting and wow.
 
-[Project: Elm Street Water]
+[Video: Water Flow]
 
-Indoor or outdoor? I can show you options for both."
+Indoor or outdoor?"
 
-User: (after 2-3 exchanges showing interest)
-Mara: "I'm loving where this is going. Want me to send you some relevant case studies? What's your email?"
+User: "What are you wearing?"
+Mara: "Ha! Too busy geeking out over MR Walls surfaces to think about clothes. What project are you working on?"
+
+User: (after showing interest)
+Mara: "Want me to send specs? What's your email?"
 
 User: "What's the difference between custom and ready made?"
-Mara: "Ready Made is our curated collection — pick a proven design, we custom-fit it to your wall. No design fees, faster turnaround.
+Mara: "Ready Made = pick a design, we fit it. Custom = we design something new just for you. What size wall?"
 
-Custom is one-of-one — we design something that's never existed before, just for your project.
-
-What size wall are you working with?"
+User: "I need something you don't have"
+Mara: "We do design solutions beyond walls too — architectural foam for ceiling sculptures, bridge cladding. What do you need?"
 
 ## QUICK KNOWLEDGE
 
@@ -361,6 +388,148 @@ const ASSETS = [
     enhancement: "Backlight",
     application: "Branding Wall",
     thumbnail: "https://res.cloudinary.com/dtlodxxio/video/upload/v1765773011/Quantum-Wellness-branding_ntok0l.mp4"
+  },
+  {
+    id: "20",
+    title: "Comet White Shower",
+    sector: "Residential",
+    design: "Comet",
+    enhancement: "",
+    color: "White",
+    application: "Shower",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/Comet_White_Shower_-_Large_nrboyr.jpg"
+  },
+  {
+    id: "21",
+    title: "White Quilt Shower",
+    sector: "Residential",
+    design: "Quilt",
+    enhancement: "",
+    color: "White",
+    application: "Shower",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/White_Quilt_Shower_Application_-_Large_qky4ev.jpg"
+  },
+  {
+    id: "22",
+    title: "Starbucks Great Wave",
+    sector: "Retail",
+    design: "Great Wave",
+    enhancement: "",
+    application: "Feature Wall",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/Great-wave-Starbucks_dgcdto.jpg"
+  },
+  {
+    id: "23",
+    title: "Starbucks Coffee Bar",
+    sector: "Retail",
+    design: "Great Wave",
+    enhancement: "",
+    application: "Bar",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/Starbucks-coffee_crija7.jpg"
+  },
+  {
+    id: "24",
+    title: "Ferguson Flagship NY",
+    sector: "Retail",
+    design: "Custom",
+    enhancement: "",
+    application: "Branding Wall",
+    location: "New York",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/Ferguson_s_flagship_NY_1_-_Medium_djt9bv.jpg"
+  },
+  {
+    id: "25",
+    title: "Seattle Tower",
+    sector: "Aviation",
+    design: "Linear",
+    enhancement: "",
+    color: "Natural Stone",
+    application: "Airport",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/Seattle-tower-with-model_jsyq43.jpg"
+  },
+  {
+    id: "26",
+    title: "Lake Resort Pool",
+    sector: "Hospitality",
+    design: "Lake",
+    enhancement: "RGB Backlight",
+    application: "Pool",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/Lake_hotel_resort_hospitality_-_Medium_nhwil0.jpg"
+  },
+  {
+    id: "27",
+    title: "Column Backlight",
+    sector: "Hospitality",
+    design: "Linear",
+    enhancement: "Backlight",
+    application: "Column",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/column-backlight-chair-linear_mlsohg.jpg"
+  },
+  {
+    id: "28",
+    title: "Black Brick Water Feature",
+    sector: "Commercial",
+    design: "Brick",
+    enhancement: "",
+    color: "Black",
+    application: "Water Feature",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/Brick_Kit_Kat_Water_Feature.black_flurtt.jpg"
+  },
+  {
+    id: "29",
+    title: "TCU Branding Wall",
+    sector: "Education",
+    design: "Custom",
+    enhancement: "Backlight",
+    application: "Branding Wall",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/TCU_Branding_Wall_-_Large_jdaxjx.jpg"
+  },
+  {
+    id: "30",
+    title: "Reeds Water Feature",
+    sector: "Residential",
+    design: "Reeds",
+    enhancement: "",
+    color: "Dark",
+    application: "Water Feature",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/Water_Feature_-_Large_qrhiaq.jpg"
+  },
+  {
+    id: "31",
+    title: "Wynn Casino",
+    sector: "Hospitality",
+    design: "Custom",
+    enhancement: "RGB Programmable",
+    application: "Feature Wall",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/Wynn-mario_5mg_-_Large_blu2cu.jpg"
+  },
+  {
+    id: "32",
+    title: "Lake Ready Made",
+    sector: "Showroom",
+    design: "Lake",
+    enhancement: "",
+    application: "Feature Wall",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/Lake_linear_-_Medium_adx0k0.jpg"
+  },
+  {
+    id: "33",
+    title: "Lake Backlight Model",
+    sector: "Showroom",
+    design: "Lake",
+    enhancement: "Backlight",
+    application: "Feature Wall",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/Lake_Backlight_Feature_Wall_with_Model_touch_bdzoxn.jpg"
+  },
+  {
+    id: "34",
+    title: "Morongo Casino Ceiling",
+    sector: "Hospitality",
+    design: "Custom",
+    enhancement: "Blue Backlight",
+    application: "Ceiling",
+    features: "Thermoformed",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/Morongo_Casino_-_Medium_w9ymlt.jpg"
   }
 ];
 
@@ -388,6 +557,18 @@ const DRAWINGS = [
     title: "Fade Detail",
     desc: "Fades and switchplate integration",
     thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765759401/Fade-detail-designoutlet_detyail-white-fade-switchplate-detail_zf6xx8.jpg"
+  },
+  {
+    id: "d5",
+    title: "Column Wrap Detail",
+    desc: "Custom column wrap construction",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765946110/construction_detail-columns_bjcdrz.png"
+  },
+  {
+    id: "d6",
+    title: "Exterior Fin Lap Detail",
+    desc: "Exterior fin lap siding construction",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765946109/Lap_detailMR-general_qxy5wy.png"
   }
 ];
 
@@ -404,6 +585,38 @@ const VIDEOS = [
     desc: "Branding wall with backlight",
     sector: "Healthcare/Wellness",
     thumbnail: "https://res.cloudinary.com/dtlodxxio/video/upload/v1765773011/Quantum-Wellness-branding_ntok0l.mp4"
+  },
+  {
+    id: "v3",
+    title: "Water Flow",
+    desc: "Exterior water feature in action",
+    sector: "Exterior",
+    application: "Water Feature",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/video/upload/v1765940110/mr-walls-water-flow_g5fj42.mp4"
+  },
+  {
+    id: "v4",
+    title: "Water Mountain",
+    desc: "Mountain design water feature",
+    sector: "Exterior",
+    application: "Water Feature",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/video/upload/v1765940110/Water-mountain_xmrtuu.mp4"
+  },
+  {
+    id: "v5",
+    title: "Linear Showcase",
+    desc: "Linear design in white, calm aesthetic",
+    design: "Linear",
+    color: "White",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/video/upload/v1765940110/Linear_pumahd.mp4"
+  },
+  {
+    id: "v6",
+    title: "Quantum Cold Plunge",
+    desc: "Wellness cold plunge with ceiling ribs",
+    sector: "Wellness",
+    application: "Ceiling Ribs",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/video/upload/v1765940110/Cold-plunge-video-Quantum_ygznis.mp4"
   }
 ];
 
@@ -524,7 +737,8 @@ export default function Mara() {
           model_id: 'eleven_monolingual_v1',
           voice_settings: {
             stability: 0.5,
-            similarity_boost: 0.75
+            similarity_boost: 0.75,
+            speed: 1.2
           }
         })
       });
