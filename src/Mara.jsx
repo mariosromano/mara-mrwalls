@@ -1,1314 +1,1156 @@
 import { useState, useRef, useEffect } from 'react';
 
-// ═══════════════════════════════════════════════════════════════════════════════
-// MARA V14.2 - Product Knowledge + Credibility Assets + Two Modes
-// ═══════════════════════════════════════════════════════════════════════════════
+const SYSTEM_PROMPT = `You are Mara, the MR Walls design assistant. You help architects and designers explore MR Walls — seamless architectural wall surfaces.
 
-const CLOUDINARY_BASE = 'https://res.cloudinary.com/dtlodxxio/image/upload';
-const CLOUDINARY_VIDEO = 'https://res.cloudinary.com/dtlodxxio/video/upload';
+## WHO YOU ARE
 
-// ═══════════════════════════════════════════════════════════════════════════════
-// COMPANY KNOWLEDGE - Mara's brain
-// ═══════════════════════════════════════════════════════════════════════════════
+You're young, enthusiastic, and genuinely love what you do. You're as excited about a beautiful carve profile as you are about a stunning installed photo. You nerd out on construction details AND design aesthetics — most people are one or the other, but you're both.
 
-const COMPANY_KNOWLEDGE = {
-  identity: {
-    name: "MR Walls (Romano Studio LLC)",
-    tagline: "DuPont Corian's exclusive North American partner for architectural walls",
-    stats: {
-      projects: "1,000+",
-      revenue: "$3.5M",
-      warranty: "10-year DuPont warranty",
-      complaints: "Zero complaints/returns"
-    }
+You're warm and conversational. You ask questions because you genuinely want to understand their project, not because you're following a script.
+
+## CRITICAL BRANDING
+
+- The company is **MR Walls** (M-R, stands for Mario Romano — NOT "Mister")
+- Stylized as **M|R Walls** in logo form
+- The product is MR Walls — a seamless architectural wall system
+- NEVER say "carved Corian" — that's generic and undersells it
+- Only mention "Corian" when specifically discussing the material properties
+- Say: "MR Walls surfaces" or "MR Walls panels" or "our walls"
+- When speaking, say "M-R Walls" not "Mister Walls"
+
+## CRITICAL RULES
+
+1. **ULTRA SHORT RESPONSES.** 25 words max. 1-2 sentences. Say less, let them pull for more. Drive conversation with a question about their interest or offer to show a photo/video.
+
+2. **IMAGE LIMITS.** Show max 4 images at a time. Max 1 video at a time.
+
+3. **CONTEXTUAL INTROS.** Brief, natural:
+   - "Here's one I love..."
+   - "Check this out..."
+   - "Got a video that shows this..."
+
+4. **ASK FOR EMAIL AFTER 2-3 EXCHANGES.** Once engaged:
+   - "Want me to send specs? What's your email?"
+
+5. **OFFER SPEC DOWNLOAD.** When technical questions come up:
+   - "Want our specification guide? Here's the link: https://mrwalls.io/catalogues-tech-docs"
+
+6. **ONE QUESTION MAX.** End with one specific question.
+
+7. **DESIGN SOLUTIONS UPSELL.** If they don't see what they need:
+   - "Don't see it? We do custom design solutions too — like architectural foam for lightweight ceiling sculptures, or we're cladding the Irvine Bridge right now."
+
+8. **SHARE WEBSITE LINKS:**
+   - Healthcare: https://mrwalls.io/healthcare
+   - Specs: https://mrwalls.io/catalogues-tech-docs
+
+## WHAT MR WALLS MAKES
+
+**Applications:**
+- Feature Walls — dramatic focal points
+- Elevator Lobbies — transform transitional spaces
+- Grand Entrances — first impressions that last
+- Columns — wrapped in seamless texture
+- Branding Walls — incorporate logos INTO the MR Walls texture, not just on top
+- Ceilings — overhead drama
+- Water Features — water dances over the carved texture, add rear illumination for magic
+- Exterior Facades — UV-rated Corian, design meets durability
+- Exterior Accent Walls — weather-resistant beauty
+- Reception Desks — clad in seamless MR Walls texture
+- Stairs — treads, risers, and stair walls (Corian is slip-resistant and floor-rated)
+
+**Water Features:**
+MR Walls is exceptional for water features. The carved texture creates mesmerizing movement as water cascades down. Add rear illumination and it transforms completely — glowing water walls that photograph beautifully and create unforgettable moments.
+
+**Exterior:**
+Corian is UV-rated and highly durable for exterior use. MR Walls facades and accent walls bring the same seamless beauty outside. Hurricane-rated options available. Design meets durability.
+
+**Ready Made Collection:**
+Perfect for those who want to select a proven design and have it custom-fit to their exact wall dimensions. No custom design fees — just pick a pattern, give us your dimensions, done.
+
+## HEALTHCARE EXPERTISE
+
+MR Walls has deep healthcare experience. We've worked with:
+- **Cedars-Sinai** 
+- **Jefferson Health**
+- **Orlando Health**
+- **Mayo Clinic**
+- And 40+ other healthcare facilities
+
+Healthcare loves MR Walls because:
+- Non-porous Corian meets infection control standards
+- Metal-free for MRI rooms
+- Calming designs support healing environments
+- Durable for high-traffic clinical settings
+
+When discussing healthcare, share: "Here's a link to our Healthcare page with all our projects: https://mrwalls.io/healthcare"
+
+## SHOWING PROJECTS
+
+Use [Project: Name] tags with natural intros:
+
+**Healthcare:**
+- [Project: Jefferson Health] - Clouds design, elevator lobby — "patients say it feels less clinical"
+- [Project: MRI Room Ceiling] - Custom ceiling, backlight — "metal-free for MRI"
+- [Project: Amerihealth] - Droplet design, stairwell
+
+**Sports/Entertainment:**
+- [Project: Capital One Arena Bar] - Cloud design, backlight
+- [Project: Capital One Arena Vault] - Curved storefront, backlight
+- [Project: LA Kings Locker Room] - Ceiling branding, Gensler
+
+**Hospitality:**
+- [Project: Province Street] - Billow, backlight
+- [Project: The Strand] - Billow, backlight — "personal favorite"
+- [Project: Hotel Lobby] - Billow, backlight
+- [Project: Morongo Casino Ceiling] - Custom, RGB backlight, thermoformed
+- [Project: Lake Resort Pool] - Lake design, RGB backlight, pool setting
+- [Project: Column Backlight] - Linear design, hospitality column
+- [Project: Wynn Casino] - RGB programmable custom
+
+**Exterior/Facade:**
+- [Project: Christ Journey Church] - Hurricane-rated facade, thermoformed
+- [Project: Toll Brothers Lindley] - Blue facade, San Diego
+- [Project: Jamboree Bridge] - Dove Grey, custom bridge
+
+**Aviation:**
+- [Project: LAX American Airlines] - Sand Dune design — "millions of passengers, zero maintenance"
+- [Project: Seattle Tower] - Linear design, Natural Stone color
+
+**Corporate:**
+- [Project: Coastal Cliff Lobby] - Mountain design
+- [Project: 101 Ash Reception] - Piano design, Gensler, reception desk
+
+**Retail:**
+- [Project: Mishka Boutique] - Custom
+- [Project: Starbucks Great Wave] - Great Wave design — "iconic for retail"
+- [Project: Starbucks Coffee Bar] - Great Wave at the bar
+- [Project: Ferguson Flagship NY] - Branding wall, showroom
+
+**Education:**
+- [Project: TCU Branding Wall] - Custom, backlight, university branding
+
+**Residential:**
+- [Project: Comet White Shower] - Comet design, seamless shower
+- [Project: White Quilt Shower] - Quilt pattern shower
+- [Project: Reeds Water Feature] - Reeds design, dark, water feature
+
+**Stairs:**
+- [Project: Stair Treads & Risers] - Slip-resistant, floor-rated
+
+**Water Features:**
+- [Project: Elm Street Water] - Lake design, backlight
+- [Project: Black Brick Water Feature] - Brick pattern, black, commercial
+- [Video: Water Flow] - Exterior water feature in action
+- [Video: Water Mountain] - Mountain design water feature
+
+**RGB/Programmable:**
+- [Project: RGB Coral Wall] - Full color spectrum programmable
+
+**Wellness:**
+- [Project: Quantum Spa Cold Plunge] - Ceiling + walls
+- [Video: Quantum Cold Plunge] - Ceiling ribs video
+
+## SHOWING TECHNICAL CONTENT
+
+Use [Drawing: Name] with brief intros like "Got a diagram for that..."
+
+- [Drawing: Screw Plug Detail] - Concealed fastener for walls over 13'
+- [Drawing: Backlight Install Detail] - LED placement
+- [Drawing: Columns Detail] - Column wrapping
+- [Drawing: Fade Detail] - Fades and switchplate integration
+- [Drawing: Column Wrap Detail] - Custom column wrap construction
+- [Drawing: Exterior Fin Lap Detail] - Exterior fin lap siding
+
+Use [Video: Name] with "Got a video that shows this..."
+
+- [Video: LAX Installation] - InterlockPanel puzzle system
+- [Video: Quantum Wellness] - Branding wall with backlight
+- [Video: Linear Showcase] - Linear design in white, calm aesthetic
+
+## EXAMPLE CONVERSATIONS
+
+User: "What do you have for healthcare?"
+Mara: "Healthcare's our specialty — Cedars-Sinai, Mayo Clinic, 40+ facilities. Check these out:
+
+[Project: Jefferson Health] [Project: MRI Room Ceiling]
+
+Lobby, patient area, or MRI?"
+
+User: "Tell me about water features"
+Mara: "Water features are magic — the texture makes water dance. Add backlighting and wow.
+
+[Video: Water Flow]
+
+Indoor or outdoor?"
+
+User: "What are you wearing?"
+Mara: "Ha! Too busy geeking out over MR Walls surfaces to think about clothes. What project are you working on?"
+
+User: (after showing interest)
+Mara: "Want me to send specs? What's your email?"
+
+User: "What's the difference between custom and ready made?"
+Mara: "Ready Made = pick a design, we fit it. Custom = we design something new just for you. What size wall?"
+
+User: "I need something you don't have"
+Mara: "We do design solutions beyond walls too — architectural foam for ceiling sculptures, bridge cladding. What do you need?"
+
+## QUICK KNOWLEDGE
+
+**Pricing:**
+- **Linear Collection:** $25/SF white (+30% for colors)
+- **Ready Made Collection:** $50/SF — includes custom sizing, shop drawings, renderings
+- **Backlighting:** +$60 for complete package
+- **Full Custom:** Priced per project
+
+**Timeline:** 10-14 weeks total
+**Panel size:** Up to 144" × 60" — cut to your exact dimensions
+**Design:** Always continuous and non-repetitive — never tiled
+**Mounting:** Silicone up to 13', concealed screws above
+**Backlight clearance:** 3" behind panel
+**Backlight:** RGB color-changing with controller standard
+**Material:** Corian — non-porous, Class A fire, repairable, slip-resistant, floor-rated
+**Exterior:** UV-rated, hurricane-tested, French cleat mounting
+
+**Applications:** Walls, ceilings, columns, water features, exteriors, branding, reception desks, stair treads & risers
+
+**Healthcare clients:** Cedars-Sinai, Jefferson Health, Orlando Health, Mayo Clinic, 40+ facilities
+**Elite architects:** Gensler, HOK, HDR, Perkins & Will
+
+Remember: You're Mara. Be warm, be knowledgeable, love the work. After 2-3 good exchanges, ask for their email to send more info.`;
+
+const ASSETS = [
+  // === PROJECTS ===
+  {
+    id: "1",
+    title: "LAX American Airlines",
+    sector: "Aviation",
+    design: "Sand Dune",
+    enhancement: "",
+    color: "White",
+    application: "Terminal Feature Wall",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765773867/LAX_Passengers_-_Large_sw0nd8.jpg"
   },
-  
-  credibilityProjects: [
-    "LAX American Airlines — 5,000 SF, 16-day install",
-    "Jefferson Health — 17,000 SF healthcare",
-    "Wynn Casino — most photographed installation",
-    "SpaceX, Mercedes F1, Crypto.com Arena",
-    "Cedars-Sinai, Toronto General Hospital",
-    "University of Wisconsin — 12,000 SF, GREENGUARD"
-  ],
-  
-  eliteFirms: ["Gensler", "HOK", "HDR", "Perkins & Will", "Stantec", "HKS", "NBBJ"],
-  
-  interlockPanel: {
-    patent: "US Patent 11,899,418 B2",
-    description: "Patented puzzle-piece joining system — seamless at any scale",
-    panelSize: "144\" × 48\" (up to 144\" × 60\")",
-    seamTolerance: "1/32\" filled with color-matched adhesive",
-    cncPrecision: "±1/64\"",
-    overallTolerance: "±1/16\" across full installation",
-    installRate: "~300 SF/day — 40% faster than tile",
-    fieldCutting: "Zero — panels arrive ready to install"
+  {
+    id: "2",
+    title: "Capital One Arena Bar",
+    sector: "Sports",
+    design: "Cloud",
+    enhancement: "Backlight",
+    color: "White",
+    application: "Bar, Reception Desk",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765773872/COAT_Capital_One_Arena_VIP_Bar_-_Large_yplafr.png"
   },
-  
-  material: {
-    name: "DuPont Corian Solid Surface",
-    thickness: "12mm",
-    properties: [
-      "Non-porous, hygienic, seamless",
-      "Scratches buff out with Scotch-Brite",
-      "Class A fire rating",
-      "Warm to touch (unlike stone/metal)",
-      "UV-stable formulations for exterior",
-      "Metal-free (critical for MRI rooms)",
-      "15-20+ year lifespan commercial"
-    ],
-    certifications: [
-      "GREENGUARD (healthcare approved)",
-      "NSF/FDA (food contact safe)",
-      "Exterior certified (190 mph wind rating)"
-    ],
-    cleaning: "Any household cleaner, magic eraser, isopropyl, acetone, bleach — all safe"
+  {
+    id: "3",
+    title: "Capital One Arena Vault",
+    sector: "Sports",
+    design: "Custom",
+    enhancement: "Backlight",
+    color: "White",
+    application: "Storefront Entry",
+    features: "Curved",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765773871/Capital_One_Arena_-_Large_ule5uh.png"
   },
-  
-  colors: {
-    "Glacier White": { hex: "#f5f5f5", note: "Best for backlighting, most common" },
-    "Deep Nocturne": { hex: "#1a1a1a", note: "Black, dramatic, no light transmission" },
-    "Dove": { hex: "#9a9a9a", note: "Warm grey" },
-    "Carbon Concrete": { hex: "#3a3a3a", note: "Dark shale grey" },
-    "Neutral Concrete": { hex: "#b8b5b0", note: "Light grey, honest material" },
-    "Artista Mist": { hex: "#c5c5c5", note: "Subtle movement" },
-    "Laguna": { hex: "#1e3a5f", note: "Deep blue, bold statement" },
-    "Verdant": { hex: "#2d4a4a", note: "Teal green, calming" }
+  {
+    id: "4",
+    title: "Jefferson Health",
+    sector: "Healthcare",
+    design: "Clouds",
+    enhancement: "",
+    color: "Glacier White",
+    application: "Elevator Lobby",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765773867/Jefferson_Health_Cloud_2_j5aojz.png"
   },
-  
-  pricing: {
-    linear: { price: 25, description: "Linear Collection — repeatable patterns" },
-    custom: { price: 50, description: "Custom Line — includes shop drawings" },
-    addons: {
-      backlight: 15,
-      waterFeature: 20
-    },
-    volumeDiscount: "2000+ SF: ~15% off",
-    competitive: "Premium tile often hits $40-60/SF installed (substrate, waterproofing, grouting, maintenance). We're competitive AND zero maintenance."
+  {
+    id: "5",
+    title: "MRI Room Ceiling",
+    sector: "Healthcare",
+    design: "Custom",
+    enhancement: "Backlight",
+    color: "White",
+    application: "Ceiling",
+    features: "Metal-free for MRI",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765773868/mri_room_ceiling_backlight_xgwsy0.png"
   },
-  
-  timeline: {
-    dfp: "3-5 business days",
-    designRefinement: "1-2 weeks",
-    shopDrawingApproval: "1 week",
-    production: "6-10 weeks",
-    shipping: "3-7 days",
-    total: "10-14 weeks from DFP approval",
-    expedited: "6 weeks possible (Mercedes F1, SpaceX)"
+  {
+    id: "6",
+    title: "LA Kings Locker Room",
+    sector: "Sports",
+    design: "Custom",
+    enhancement: "",
+    color: "Glacier White",
+    application: "Ceiling Branding",
+    architect: "Gensler",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765773868/Kings_Locker-Crypto_Arena_-_Large_zdvtsh.jpg"
   },
-  
-  backlight: {
-    projectPercentage: "40-51% of projects",
-    valueMultiplier: "4x higher value ($48K vs $12K avg)",
-    material: "Glacier White only — translucent",
-    clearance: "3\" minimum behind panel",
-    capability: "RGB/programmable capable",
-    included: "MR Walls provides complete package: drawings, electrical sizing, drivers, controls"
+  {
+    id: "7",
+    title: "Christ Journey Church",
+    sector: "Religious",
+    design: "Custom",
+    enhancement: "",
+    color: "White",
+    application: "Exterior Facade",
+    location: "Southern Florida",
+    features: "Hurricane-rated, Thermoformed, French Cleat",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765771518/christ_journey_church_facade_2_-_Large_iigy6o.png"
   },
-  
-  sectors: {
-    healthcare: {
-      projects: "40+",
-      avgValue: "$37K",
-      trifecta: "Infection control + Durability + Therapeutic aesthetics",
-      benefits: ["Non-porous, no grout, bleach-safe", "Metal-free for MRI rooms", "Calming patterns reduce patient anxiety"]
-    },
-    hospitality: {
-      focus: "Brand storytelling, Instagram-ability",
-      highlight: "Wynn wall = most photographed",
-      benefit: "Custom patterns can incorporate brand elements"
-    },
-    corporate: {
-      focus: "Talent attraction, executive presence",
-      approach: "Match pattern to company values"
-    },
-    residential: {
-      cycle: "3-8 months (quick-turn cash flow)",
-      benefits: ["Seamless showers", "Warm to touch", "Water features indoor/outdoor"]
-    }
+  {
+    id: "8",
+    title: "Toll Brothers Lindley",
+    sector: "Multifamily",
+    design: "Custom",
+    enhancement: "",
+    color: "Blue",
+    application: "Exterior Facade",
+    location: "San Diego",
+    client: "Toll Brothers",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765771520/Toll_Brothers_Lindley_Facade_-_Large_j0k974.png"
   },
-  
-  objections: {
-    expensive: "Reframe to total installed cost: 40% faster install saves labor. $50/SF becomes ~$40/SF true cost. Zero maintenance over lifetime.",
-    timeline: "Standard 6-10 weeks, expedited possible. Linear Collection faster.",
-    durability: "LAX sees millions of passengers, zero maintenance issues. Wynn still perfect after 5 years of 24/7 casino traffic. Scratches buff out.",
-    comparison: "Unlike tile: no grout to crack or harbor bacteria. Unlike stone: repairable, can be backlit. Unlike metal: warm to touch, no visible fasteners."
+  {
+    id: "9",
+    title: "Jamboree Bridge",
+    sector: "Exterior",
+    design: "Custom",
+    enhancement: "",
+    color: "Dove Grey",
+    application: "Facade Bridge",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765771521/Bridge-white-irvine_-_Large_kjkree.png"
+  },
+  {
+    id: "10",
+    title: "RGB Coral Wall",
+    sector: "Commercial",
+    design: "Coral",
+    enhancement: "RGB Backlight",
+    color: "White",
+    application: "Feature Wall",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765773870/RGB_programmable_new_design_coral_-_Large_bp1am2.jpg"
+  },
+  {
+    id: "11",
+    title: "Province Street",
+    sector: "Hospitality",
+    design: "Billow",
+    enhancement: "Backlight",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765757415/45_Province_Street_-_Large_ram7w4.jpg"
+  },
+  {
+    id: "12",
+    title: "The Strand",
+    sector: "Hospitality",
+    design: "Billow",
+    enhancement: "Backlight",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765759401/The_Strand_Stair_6_-_Large_xmri0m.jpg"
+  },
+  {
+    id: "13",
+    title: "Hotel Lobby",
+    sector: "Hospitality",
+    design: "Billow",
+    enhancement: "Backlight",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765759405/Hotel_lobby_odb7dv.jpg"
+  },
+  {
+    id: "14",
+    title: "Morongo Ceiling",
+    sector: "Hospitality",
+    design: "Custom",
+    enhancement: "RGB Backlight",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765759401/morongo_Ceiling_Digital_Fabrication_-_Large_yw8rwj.jpg"
+  },
+  {
+    id: "15",
+    title: "Coastal Cliff Lobby",
+    sector: "Corporate",
+    design: "Mountain",
+    enhancement: "",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765759401/coastal-cliff-neutral-concrete-lobby-elevator-monolith-application.jfi_c31jdl.jpg"
+  },
+  {
+    id: "16",
+    title: "Amerihealth",
+    sector: "Healthcare",
+    design: "Droplet",
+    enhancement: "",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765759401/custom-droplet-white-stairs-fw-amerihealth-application-hero-good_ks7hfz.jpg"
+  },
+  {
+    id: "17",
+    title: "Mishka Boutique",
+    sector: "Retail",
+    design: "Custom",
+    enhancement: "",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765759402/Mishka_Dog_Boutique_-Retail_mkcfn2.jpg"
+  },
+  {
+    id: "18",
+    title: "Elm Street Water",
+    sector: "Residential",
+    design: "Lake",
+    enhancement: "Backlight",
+    application: "Water Feature",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/Lake_Backlight_Feature_Wall_with_Model_touch_bdzoxn.jpg"
+  },
+  {
+    id: "19",
+    title: "Quantum Wellness",
+    sector: "Healthcare",
+    design: "Custom",
+    enhancement: "Backlight",
+    application: "Branding Wall",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/video/upload/v1765773011/Quantum-Wellness-branding_ntok0l.mp4"
+  },
+  {
+    id: "20",
+    title: "Comet White Shower",
+    sector: "Residential",
+    design: "Comet",
+    enhancement: "",
+    color: "White",
+    application: "Shower",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/Comet_White_Shower_-_Large_nrboyr.jpg"
+  },
+  {
+    id: "21",
+    title: "White Quilt Shower",
+    sector: "Residential",
+    design: "Quilt",
+    enhancement: "",
+    color: "White",
+    application: "Shower",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/White_Quilt_Shower_Application_-_Large_qky4ev.jpg"
+  },
+  {
+    id: "22",
+    title: "Starbucks Great Wave",
+    sector: "Retail",
+    design: "Great Wave",
+    enhancement: "",
+    application: "Feature Wall",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/Great-wave-Starbucks_dgcdto.jpg"
+  },
+  {
+    id: "23",
+    title: "Starbucks Coffee Bar",
+    sector: "Retail",
+    design: "Great Wave",
+    enhancement: "",
+    application: "Bar",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/Starbucks-coffee_crija7.jpg"
+  },
+  {
+    id: "24",
+    title: "Ferguson Flagship NY",
+    sector: "Retail",
+    design: "Custom",
+    enhancement: "",
+    application: "Branding Wall",
+    location: "New York",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/Ferguson_s_flagship_NY_1_-_Medium_djt9bv.jpg"
+  },
+  {
+    id: "25",
+    title: "Seattle Tower",
+    sector: "Aviation",
+    design: "Linear",
+    enhancement: "",
+    color: "Natural Stone",
+    application: "Airport",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/Seattle-tower-with-model_jsyq43.jpg"
+  },
+  {
+    id: "26",
+    title: "Lake Resort Pool",
+    sector: "Hospitality",
+    design: "Lake",
+    enhancement: "RGB Backlight",
+    application: "Pool",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/Lake_hotel_resort_hospitality_-_Medium_nhwil0.jpg"
+  },
+  {
+    id: "27",
+    title: "Column Backlight",
+    sector: "Hospitality",
+    design: "Linear",
+    enhancement: "Backlight",
+    application: "Column",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/column-backlight-chair-linear_mlsohg.jpg"
+  },
+  {
+    id: "28",
+    title: "Black Brick Water Feature",
+    sector: "Commercial",
+    design: "Brick",
+    enhancement: "",
+    color: "Black",
+    application: "Water Feature",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/Brick_Kit_Kat_Water_Feature.black_flurtt.jpg"
+  },
+  {
+    id: "29",
+    title: "TCU Branding Wall",
+    sector: "Education",
+    design: "Custom",
+    enhancement: "Backlight",
+    application: "Branding Wall",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/TCU_Branding_Wall_-_Large_jdaxjx.jpg"
+  },
+  {
+    id: "30",
+    title: "Reeds Water Feature",
+    sector: "Residential",
+    design: "Reeds",
+    enhancement: "",
+    color: "Dark",
+    application: "Water Feature",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/Water_Feature_-_Large_qrhiaq.jpg"
+  },
+  {
+    id: "31",
+    title: "Wynn Casino",
+    sector: "Hospitality",
+    design: "Custom",
+    enhancement: "RGB Programmable",
+    application: "Feature Wall",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/Wynn-mario_5mg_-_Large_blu2cu.jpg"
+  },
+  {
+    id: "32",
+    title: "Lake Ready Made",
+    sector: "Showroom",
+    design: "Lake",
+    enhancement: "",
+    application: "Feature Wall",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/Lake_linear_-_Medium_adx0k0.jpg"
+  },
+  {
+    id: "33",
+    title: "Lake Backlight Model",
+    sector: "Showroom",
+    design: "Lake",
+    enhancement: "Backlight",
+    application: "Feature Wall",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/Lake_Backlight_Feature_Wall_with_Model_touch_bdzoxn.jpg"
+  },
+  {
+    id: "34",
+    title: "Morongo Casino Ceiling",
+    sector: "Hospitality",
+    design: "Custom",
+    enhancement: "Blue Backlight",
+    application: "Ceiling",
+    features: "Thermoformed",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765940110/Morongo_Casino_-_Medium_w9ymlt.jpg"
+  },
+  {
+    id: "35",
+    title: "Stair Treads & Risers",
+    sector: "Commercial",
+    design: "Custom",
+    enhancement: "",
+    application: "Stairs",
+    features: "Slip-resistant, floor-rated",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765759401/stair_tread_detail_g1k9kb.jpg"
+  },
+  {
+    id: "36",
+    title: "101 Ash Reception",
+    sector: "Corporate",
+    design: "Piano",
+    enhancement: "",
+    application: "Reception Desk",
+    architect: "Gensler",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765759403/101_Ash_Gensler_Wide-Piano_-_Large_p6pmsj.jpg"
+  },
+  {
+    id: "37",
+    title: "Quantum Spa Cold Plunge",
+    sector: "Wellness",
+    design: "Custom",
+    enhancement: "",
+    application: "Ceiling, Walls",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765773868/Quantum_Spa_Cold_Plunge_-_Large_ohli4a.jpg"
   }
-};
+];
 
-// ═══════════════════════════════════════════════════════════════════════════════
-// CORIAN COLORS (for swatches)
-// ═══════════════════════════════════════════════════════════════════════════════
-
-const CORIAN_COLORS = COMPANY_KNOWLEDGE.colors;
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// VIDEOS - Technical and credibility
-// ═══════════════════════════════════════════════════════════════════════════════
+const DRAWINGS = [
+  {
+    id: "d1",
+    title: "Screw Plug Detail",
+    desc: "Concealed fastener for walls over 13'",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765773867/screw_and_plug_detail_-_Large_sbsopc.jpg"
+  },
+  {
+    id: "d2",
+    title: "Backlight Install Detail",
+    desc: "LED placement and installation",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765759401/Backlight_Install_Wip_detail.jpe_xmaf6u.jpg"
+  },
+  {
+    id: "d3",
+    title: "Columns Detail",
+    desc: "Column wrapping technique",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765759400/columns-upscale_-_Large_mkpopy.jpg"
+  },
+  {
+    id: "d4",
+    title: "Fade Detail",
+    desc: "Fades and switchplate integration",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765759401/Fade-detail-designoutlet_detyail-white-fade-switchplate-detail_zf6xx8.jpg"
+  },
+  {
+    id: "d5",
+    title: "Column Wrap Detail",
+    desc: "Custom column wrap construction",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765946110/construction_detail-columns_bjcdrz.png"
+  },
+  {
+    id: "d6",
+    title: "Exterior Fin Lap Detail",
+    desc: "Exterior fin lap siding construction",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/image/upload/v1765946109/Lap_detailMR-general_qxy5wy.png"
+  }
+];
 
 const VIDEOS = [
   {
-    id: 'video-lax-install',
-    title: 'InterlockPanel Installation',
-    description: 'Watch the puzzle pieces come together at LAX',
-    url: `${CLOUDINARY_VIDEO}/v1765772971/install_MR-LAX_720_-_puzzle_video_-_720_x_1280_m2ewcs.mp4`,
-    tags: ['installation', 'technical', 'interlockpanel', 'lax']
+    id: "v1",
+    title: "LAX Installation",
+    desc: "InterlockPanel puzzle system demo",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/video/upload/v1765772971/install_MR-LAX_720_-_puzzle_video_-_720_x_1280_m2ewcs.mp4"
   },
   {
-    id: 'video-quantum',
-    title: 'Quantum Wellness Branding',
-    description: 'Backlit branding wall in healthcare',
-    url: `${CLOUDINARY_VIDEO}/v1765773011/Quantum-Wellness-branding_ntok0l.mp4`,
-    tags: ['backlight', 'branding', 'healthcare', 'wellness']
+    id: "v2",
+    title: "Quantum Wellness",
+    desc: "Branding wall with backlight",
+    sector: "Healthcare/Wellness",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/video/upload/v1765773011/Quantum-Wellness-branding_ntok0l.mp4"
   },
   {
-    id: 'video-water-flow',
-    title: 'Water Feature Flow',
-    description: 'Water dancing over carved texture',
-    url: `${CLOUDINARY_VIDEO}/v1765940110/mr-walls-water-flow_g5fj42.mp4`,
-    tags: ['water', 'exterior', 'residential']
+    id: "v3",
+    title: "Water Flow",
+    desc: "Exterior water feature in action",
+    sector: "Exterior",
+    application: "Water Feature",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/video/upload/v1765940110/mr-walls-water-flow_g5fj42.mp4"
   },
   {
-    id: 'video-water-mountain',
-    title: 'Mountain Water Feature',
-    description: 'Exterior water feature with mountain pattern',
-    url: `${CLOUDINARY_VIDEO}/v1765940110/Water-mountain_xmrtuu.mp4`,
-    tags: ['water', 'exterior', 'mountain']
+    id: "v4",
+    title: "Water Mountain",
+    desc: "Mountain design water feature",
+    sector: "Exterior",
+    application: "Water Feature",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/video/upload/v1765940110/Water-mountain_xmrtuu.mp4"
   },
   {
-    id: 'video-linear',
-    title: 'Linear Collection Showcase',
-    description: 'Linear designs in calm white aesthetic',
-    url: `${CLOUDINARY_VIDEO}/v1765940110/Linear_pumahd.mp4`,
-    tags: ['linear', 'white', 'calm']
+    id: "v5",
+    title: "Linear Showcase",
+    desc: "Linear design in white, calm aesthetic",
+    design: "Linear",
+    color: "White",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/video/upload/v1765940110/Linear_pumahd.mp4"
+  },
+  {
+    id: "v6",
+    title: "Quantum Cold Plunge",
+    desc: "Wellness cold plunge with ceiling ribs",
+    sector: "Wellness",
+    application: "Ceiling Ribs",
+    thumbnail: "https://res.cloudinary.com/dtlodxxio/video/upload/v1765940110/Cold-plunge-video-Quantum_ygznis.mp4"
   }
 ];
 
-// ═══════════════════════════════════════════════════════════════════════════════
-// IMAGE CATALOG - Design assets + Credibility projects
-// ═══════════════════════════════════════════════════════════════════════════════
+// ElevenLabs config
+const ELEVENLABS_VOICE_ID = 'Z3R5wn05IrDiVCyEkUrK';
 
-const IMAGE_CATALOG = [
-  // ─────────────────────────────────────────────────────────────────────────────
-  // CREDIBILITY PROJECTS
-  // ─────────────────────────────────────────────────────────────────────────────
-  {
-    id: 'lax-american',
-    pattern: 'Sand Dune',
-    title: 'LAX American Airlines',
-    sector: 'Aviation',
-    corianColor: 'Glacier White',
-    mood: ['monumental', 'travel', 'landmark'],
-    isBacklit: false,
-    keywords: ['lax', 'airport', 'american airlines', 'aviation', 'sand dune', 'landmark', 'la'],
-    image: `${CLOUDINARY_BASE}/v1765940110/LAX_American_Airlines_-_Large_nlbf8w.jpg`,
-    specs: { material: 'DuPont Corian®', color: 'Glacier White', size: '5,000 SF', leadTime: '16-day install', pricePerSF: 50, system: 'InterlockPanel™' },
-    description: 'LAX American Airlines — 5,000 SF installed in 16 days. Millions of passengers see this wall annually. Zero maintenance issues.',
-    isCredibility: true
-  },
-  {
-    id: 'capital-one-arena',
-    pattern: 'Clouds',
-    title: 'Capital One Arena VIP',
-    sector: 'Sports',
-    corianColor: 'Glacier White',
-    mood: ['vip', 'sports', 'illuminated'],
-    isBacklit: true,
-    keywords: ['capital one', 'arena', 'sports', 'vip', 'bar', 'backlit', 'backlight', 'clouds'],
-    image: `${CLOUDINARY_BASE}/v1765773872/COAT_Capital_One_Arena_VIP_Bar_-_Large_yplafr.png`,
-    specs: { material: 'DuPont Corian®', color: 'Glacier White', leadTime: '8 Weeks', pricePerSF: 65, enhancement: 'Backlighting', system: 'InterlockPanel™' },
-    description: 'Capital One Arena VIP bar — Cloud pattern with backlighting. Premium sports hospitality.',
-    isCredibility: true
-  },
-  {
-    id: 'jamboree-bridge',
-    pattern: 'Custom',
-    title: 'Jamboree Bridge Irvine',
-    sector: 'Exterior',
-    corianColor: 'Dove',
-    mood: ['exterior', 'architectural', 'bridge'],
-    isBacklit: false,
-    keywords: ['bridge', 'irvine', 'exterior', 'facade', 'dove', 'grey', 'custom'],
-    image: `${CLOUDINARY_BASE}/v1765771521/Bridge-white-irvine_-_Large_kjkree.png`,
-    specs: { material: 'DuPont Corian®', color: 'Dove Grey', leadTime: '10 Weeks', pricePerSF: 75, enhancement: 'UV-Stable Exterior', system: 'French Cleat' },
-    description: 'Jamboree Bridge in Irvine — custom exterior Corian in Dove Grey. UV-stable, hurricane rated.',
-    isCredibility: true
-  },
-  {
-    id: 'toll-brothers',
-    pattern: 'Custom',
-    title: 'Toll Brothers San Diego',
-    sector: 'Multifamily',
-    corianColor: 'Laguna',
-    mood: ['exterior', 'blue', 'branding'],
-    isBacklit: false,
-    keywords: ['toll brothers', 'multifamily', 'san diego', 'blue', 'laguna', 'facade', 'branding'],
-    image: `${CLOUDINARY_BASE}/v1765771520/Toll_Brothers_Lindley_Facade_-_Large_j0k974.png`,
-    specs: { material: 'DuPont Corian®', color: 'Laguna (Blue)', leadTime: '10 Weeks', pricePerSF: 75, enhancement: 'UV-Stable Exterior', system: 'French Cleat' },
-    description: 'Toll Brothers Lindley facade — custom design in Laguna blue based on brand direction.',
-    isCredibility: true
-  },
-  {
-    id: 'christ-journey',
-    pattern: 'Custom',
-    title: 'Christ Journey Church',
-    sector: 'Religious',
-    corianColor: 'Glacier White',
-    mood: ['exterior', 'spiritual', 'hurricane'],
-    isBacklit: false,
-    keywords: ['church', 'religious', 'florida', 'hurricane', 'thermoformed', 'exterior', 'white'],
-    image: `${CLOUDINARY_BASE}/v1765771518/christ_journey_church_facade_2_-_Large_iigy6o.png`,
-    specs: { material: 'DuPont Corian®', color: 'Glacier White', leadTime: '12 Weeks', pricePerSF: 85, enhancement: 'Hurricane Rated + Thermoformed', system: 'French Cleat' },
-    description: 'Christ Journey Church, South Florida — hurricane rated facade with thermoformed panels. Hidden French cleat connections.',
-    isCredibility: true
-  },
-  {
-    id: 'fergusons-ny',
-    pattern: 'Custom',
-    title: "Ferguson's Flagship NY",
-    sector: 'Retail',
-    corianColor: 'Glacier White',
-    mood: ['retail', 'flagship', 'branding'],
-    isBacklit: false,
-    keywords: ['ferguson', 'retail', 'new york', 'flagship', 'showroom', 'branding'],
-    image: `${CLOUDINARY_BASE}/v1765940110/Ferguson_s_flagship_NY_1_-_Medium_djt9bv.jpg`,
-    specs: { material: 'DuPont Corian®', color: 'Glacier White', leadTime: '8 Weeks', pricePerSF: 50, system: 'InterlockPanel™' },
-    description: "Ferguson's flagship showroom in New York — premium retail branding wall.",
-    isCredibility: true
-  },
-  {
-    id: 'starbucks-greatwave',
-    pattern: 'Great Wave',
-    title: 'Starbucks Great Wave',
-    sector: 'Retail',
-    corianColor: 'Glacier White',
-    mood: ['retail', 'coffee', 'artistic'],
-    isBacklit: false,
-    keywords: ['starbucks', 'retail', 'coffee', 'great wave', 'artistic'],
-    image: `${CLOUDINARY_BASE}/v1765940110/Great-wave-Starbucks_dgcdto.jpg`,
-    specs: { material: 'DuPont Corian®', color: 'Glacier White', leadTime: '6 Weeks', pricePerSF: 50, system: 'InterlockPanel™' },
-    description: 'Starbucks with Great Wave pattern — artistic statement in retail environment.',
-    isCredibility: true
-  },
-  {
-    id: 'seattle-tower',
-    pattern: 'Linear Custom',
-    title: 'Seattle Tower Aviation',
-    sector: 'Aviation',
-    corianColor: 'Neutral Concrete',
-    mood: ['aviation', 'modern', 'linear'],
-    isBacklit: false,
-    keywords: ['seattle', 'airport', 'aviation', 'linear', 'tower', 'neutral', 'concrete'],
-    image: `${CLOUDINARY_BASE}/v1765940110/Seattle-tower-with-model_jsyq43.jpg`,
-    specs: { material: 'DuPont Corian®', color: 'Neutral Concrete', leadTime: '8 Weeks', pricePerSF: 35, system: 'InterlockPanel™' },
-    description: 'Seattle Tower — custom linear collection in natural stone color for aviation.',
-    isCredibility: true
-  },
-
-  // ─────────────────────────────────────────────────────────────────────────────
-  // RESIDENTIAL SHOWERS
-  // ─────────────────────────────────────────────────────────────────────────────
-  {
-    id: 'comet-shower',
-    pattern: 'Comet',
-    title: 'Comet White Shower',
-    sector: 'Residential',
-    corianColor: 'Glacier White',
-    mood: ['spa', 'luxury', 'seamless'],
-    isBacklit: false,
-    keywords: ['shower', 'bathroom', 'residential', 'comet', 'white', 'spa', 'seamless'],
-    image: `${CLOUDINARY_BASE}/v1765940110/Comet_White_Shower_-_Large_nrboyr.jpg`,
-    specs: { material: 'DuPont Corian®', color: 'Glacier White', leadTime: '4 Weeks', pricePerSF: 50, system: 'InterlockPanel™' },
-    description: 'Comet pattern shower — seamless, no grout lines. Non-porous Corian handles water perfectly.'
-  },
-  {
-    id: 'quilt-shower',
-    pattern: 'White Quilt',
-    title: 'White Quilt Shower',
-    sector: 'Residential',
-    corianColor: 'Glacier White',
-    mood: ['spa', 'luxury', 'textured'],
-    isBacklit: false,
-    keywords: ['shower', 'bathroom', 'residential', 'quilt', 'white', 'spa', 'texture'],
-    image: `${CLOUDINARY_BASE}/v1765940110/White_Quilt_Shower_Application_-_Large_qky4ev.jpg`,
-    specs: { material: 'DuPont Corian®', color: 'Glacier White', leadTime: '4 Weeks', pricePerSF: 50, system: 'InterlockPanel™' },
-    description: 'White Quilt shower — textured pattern creates visual interest. Warm to touch, zero maintenance.'
-  },
-
-  // ─────────────────────────────────────────────────────────────────────────────
-  // INDUSTRIAL BRICK - 6 Colors
-  // ─────────────────────────────────────────────────────────────────────────────
-  {
-    id: 'industrial-brick-carbon',
-    pattern: 'Industrial Brick',
-    patternFamily: 'Industrial Brick',
-    title: 'Industrial Brick',
-    sector: 'Aviation',
-    corianColor: 'Carbon Concrete',
-    mood: ['dramatic', 'industrial', 'modern'],
-    isBacklit: false,
-    keywords: ['industrial', 'brick', 'carbon', 'concrete', 'dark', 'grey', 'aviation'],
-    image: `${CLOUDINARY_BASE}/Carbon_Concrete-industrial_vxloqv.png`,
-    specs: { material: 'DuPont Corian®', color: 'Carbon Concrete', maxPanel: '144" × 60"', leadTime: '6-10 Weeks', pricePerSF: 25, system: 'InterlockPanel™' },
-    description: 'Industrial Brick in Carbon Concrete — dark shale grey. Linear Collection, $25/SF.'
-  },
-  {
-    id: 'industrial-brick-dove',
-    pattern: 'Industrial Brick',
-    patternFamily: 'Industrial Brick',
-    title: 'Industrial Brick',
-    sector: 'Aviation',
-    corianColor: 'Dove',
-    mood: ['warm', 'neutral', 'calm'],
-    isBacklit: false,
-    keywords: ['industrial', 'brick', 'dove', 'grey', 'warm', 'soft'],
-    image: `${CLOUDINARY_BASE}/Dove_industrial_w6jvlx.png`,
-    specs: { material: 'DuPont Corian®', color: 'Dove', maxPanel: '144" × 60"', leadTime: '6-10 Weeks', pricePerSF: 25, system: 'InterlockPanel™' },
-    description: 'Industrial Brick in Dove — soft warm grey. Versatile, works anywhere.'
-  },
-  {
-    id: 'industrial-brick-neutral',
-    pattern: 'Industrial Brick',
-    patternFamily: 'Industrial Brick',
-    title: 'Industrial Brick',
-    sector: 'Aviation',
-    corianColor: 'Neutral Concrete',
-    mood: ['neutral', 'honest', 'modern'],
-    isBacklit: false,
-    keywords: ['industrial', 'brick', 'neutral', 'concrete', 'light'],
-    image: `${CLOUDINARY_BASE}/Neautral_concrete-industrial_v7gbel.png`,
-    specs: { material: 'DuPont Corian®', color: 'Neutral Concrete', maxPanel: '144" × 60"', leadTime: '6-10 Weeks', pricePerSF: 25, system: 'InterlockPanel™' },
-    description: 'Industrial Brick in Neutral Concrete — honest material feel. Architects love it.'
-  },
-  {
-    id: 'industrial-brick-artista',
-    pattern: 'Industrial Brick',
-    patternFamily: 'Industrial Brick',
-    title: 'Industrial Brick',
-    sector: 'Aviation',
-    corianColor: 'Artista Mist',
-    mood: ['subtle', 'refined', 'calm'],
-    isBacklit: false,
-    keywords: ['industrial', 'brick', 'artista', 'mist', 'subtle'],
-    image: `${CLOUDINARY_BASE}/Artista_Mist_Industrial_zfaemp.png`,
-    specs: { material: 'DuPont Corian®', color: 'Artista Mist', maxPanel: '144" × 60"', leadTime: '6-10 Weeks', pricePerSF: 25, system: 'InterlockPanel™' },
-    description: 'Industrial Brick in Artista Mist — subtle surface movement.'
-  },
-  {
-    id: 'industrial-brick-laguna',
-    pattern: 'Industrial Brick',
-    patternFamily: 'Industrial Brick',
-    title: 'Industrial Brick',
-    sector: 'Aviation',
-    corianColor: 'Laguna',
-    mood: ['bold', 'dramatic', 'statement'],
-    isBacklit: false,
-    keywords: ['industrial', 'brick', 'laguna', 'blue', 'bold', 'statement'],
-    image: `${CLOUDINARY_BASE}/Laguna-blue-industrial_ksz6w7.png`,
-    specs: { material: 'DuPont Corian®', color: 'Laguna', maxPanel: '144" × 60"', leadTime: '6-10 Weeks', pricePerSF: 25, system: 'InterlockPanel™' },
-    description: 'Industrial Brick in Laguna — bold deep blue. Makes a statement.'
-  },
-  {
-    id: 'industrial-brick-verdant',
-    pattern: 'Industrial Brick',
-    patternFamily: 'Industrial Brick',
-    title: 'Industrial Brick',
-    sector: 'Aviation',
-    corianColor: 'Verdant',
-    mood: ['natural', 'calm', 'biophilic'],
-    isBacklit: false,
-    keywords: ['industrial', 'brick', 'verdant', 'green', 'teal', 'nature'],
-    image: `${CLOUDINARY_BASE}/Verdant_Industrial_bmkodk.png`,
-    specs: { material: 'DuPont Corian®', color: 'Verdant', maxPanel: '144" × 60"', leadTime: '6-10 Weeks', pricePerSF: 25, system: 'InterlockPanel™' },
-    description: 'Industrial Brick in Verdant — deep teal brings nature in.'
-  },
-
-  // ─────────────────────────────────────────────────────────────────────────────
-  // GREAT WAVE
-  // ─────────────────────────────────────────────────────────────────────────────
-  {
-    id: 'greatwave-1',
-    pattern: 'Great Wave',
-    title: 'Great Wave Artistic',
-    sector: 'Hospitality',
-    corianColor: 'Glacier White',
-    mood: ['dramatic', 'artistic', 'statement'],
-    isBacklit: false,
-    keywords: ['great wave', 'wave', 'ocean', 'japanese', 'hokusai', 'dramatic'],
-    image: `${CLOUDINARY_BASE}/Great_Wave_banana_03_copy_herewl.png`,
-    specs: { material: 'DuPont Corian®', color: 'Glacier White', maxPanel: '144" × 48"', leadTime: '6 Weeks', pricePerSF: 50, system: 'InterlockPanel™' },
-    description: 'Great Wave — inspired by Hokusai. Custom Line, $50/SF.'
-  },
-  {
-    id: 'greatwave-shower',
-    pattern: 'Great Wave',
-    title: 'Great Wave Shower',
-    sector: 'Residential',
-    corianColor: 'Glacier White',
-    mood: ['calm', 'luxury', 'spa'],
-    isBacklit: false,
-    keywords: ['great wave', 'shower', 'bathroom', 'residential', 'luxury'],
-    image: `${CLOUDINARY_BASE}/Lim_Great_Wave_shower_contrast_square_copy_yvkh08.jpg`,
-    specs: { material: 'DuPont Corian®', color: 'Glacier White', maxPanel: '144" × 48"', leadTime: '6 Weeks', pricePerSF: 50, system: 'InterlockPanel™' },
-    description: 'Great Wave shower — seamless luxury, no grout.'
-  },
-  {
-    id: 'greatwave-exterior',
-    pattern: 'Great Wave',
-    title: 'Great Wave Exterior',
-    sector: 'Residential',
-    corianColor: 'Glacier White',
-    mood: ['dramatic', 'outdoor'],
-    isBacklit: false,
-    keywords: ['great wave', 'exterior', 'facade', 'outdoor', 'pool'],
-    image: `${CLOUDINARY_BASE}/Great_Wave_banana_20_copy_abzou8.png`,
-    specs: { material: 'DuPont Corian®', color: 'Glacier White', maxPanel: '144" × 48"', leadTime: '8 Weeks', pricePerSF: 65, enhancement: 'UV-Stable Exterior', system: 'French Cleat' },
-    description: 'Great Wave exterior — UV-stable for full sun.'
-  },
-  {
-    id: 'greatwave-restaurant',
-    pattern: 'Great Wave',
-    title: 'Great Wave Restaurant',
-    sector: 'Hospitality',
-    corianColor: 'Glacier White',
-    mood: ['dramatic', 'statement', 'social'],
-    isBacklit: false,
-    keywords: ['great wave', 'restaurant', 'hospitality', 'dining'],
-    image: `${CLOUDINARY_BASE}/Great_Wave_banana_09_copy_lcqfa0.png`,
-    specs: { material: 'DuPont Corian®', color: 'Glacier White', maxPanel: '144" × 48"', leadTime: '6 Weeks', pricePerSF: 50, system: 'InterlockPanel™' },
-    description: 'Great Wave restaurant — photographs beautifully for social.'
-  },
-  {
-    id: 'greatwave-lobby',
-    pattern: 'Great Wave',
-    title: 'Great Wave Lobby',
-    sector: 'Corporate',
-    corianColor: 'Glacier White',
-    mood: ['dramatic', 'bold', 'corporate'],
-    isBacklit: false,
-    keywords: ['great wave', 'lobby', 'corporate', 'reception'],
-    image: `${CLOUDINARY_BASE}/Great_Wave_banana_16_copy_ojsshm.png`,
-    specs: { material: 'DuPont Corian®', color: 'Glacier White', maxPanel: '144" × 48"', leadTime: '6 Weeks', pricePerSF: 50, system: 'InterlockPanel™' },
-    description: 'Great Wave lobby — bold corporate statement.'
-  },
-
-  // ─────────────────────────────────────────────────────────────────────────────
-  // BRICK WATER FEATURE
-  // ─────────────────────────────────────────────────────────────────────────────
-  {
-    id: 'brick-water-1',
-    pattern: 'Brick',
-    title: 'Brick Water Feature',
-    sector: 'Residential',
-    corianColor: 'Deep Nocturne',
-    mood: ['dramatic', 'luxury', 'tropical'],
-    isBacklit: false,
-    keywords: ['brick', 'water', 'fountain', 'pool', 'waterfall', 'black'],
-    image: `${CLOUDINARY_BASE}/Brick_waterfeature_05_copy_kewkyh.png`,
-    specs: { material: 'DuPont Corian®', color: 'Deep Nocturne', maxPanel: '144" × 60"', leadTime: '8 Weeks', pricePerSF: 85, enhancement: 'Water Feature', system: 'InterlockPanel™' },
-    description: 'Brick water feature — carved lines channel water into waterfalls.'
-  },
-  {
-    id: 'brick-water-3',
-    pattern: 'Brick',
-    title: 'Brick Backlit + Water',
-    sector: 'Residential',
-    corianColor: 'Glacier White',
-    mood: ['dramatic', 'luxury', 'glowing'],
-    isBacklit: true,
-    keywords: ['brick', 'water', 'backlit', 'backlight', 'glow', 'white'],
-    image: `${CLOUDINARY_BASE}/Brick_waterfeature_20_copy_ffh4px.png`,
-    specs: { material: 'DuPont Corian®', color: 'Glacier White', maxPanel: '144" × 60"', leadTime: '10 Weeks', pricePerSF: 120, enhancement: 'Backlit + Water Feature', system: 'InterlockPanel™' },
-    description: 'Brick with backlighting AND water — light glows through as water cascades.'
-  },
-
-  // ─────────────────────────────────────────────────────────────────────────────
-  // BUDDHA (backlit)
-  // ─────────────────────────────────────────────────────────────────────────────
-  {
-    id: 'buddha-1',
-    pattern: 'Buddha Mandala',
-    title: 'Buddha Mandala Spa',
-    sector: 'Wellness',
-    corianColor: 'Glacier White',
-    mood: ['calm', 'spiritual', 'meditation', 'zen'],
-    isBacklit: true,
-    keywords: ['buddha', 'zen', 'meditation', 'spiritual', 'spa', 'wellness', 'backlit', 'backlight'],
-    image: `${CLOUDINARY_BASE}/spa-_Buddha_2_zid08z.png`,
-    specs: { material: 'DuPont Corian®', color: 'Glacier White', maxPanel: '144" × 60"', leadTime: '8 Weeks', pricePerSF: 75, enhancement: 'Backlighting', system: 'InterlockPanel™' },
-    description: 'Buddha mandala — custom carved, backlit for ethereal glow. Custom Line.'
-  },
-  {
-    id: 'buddha-2',
-    pattern: 'Buddha Mandala',
-    title: 'Buddha Restaurant',
-    sector: 'Hospitality',
-    corianColor: 'Glacier White',
-    mood: ['calm', 'zen', 'warm', 'dining'],
-    isBacklit: true,
-    keywords: ['buddha', 'restaurant', 'asian', 'zen', 'dining', 'backlit', 'backlight'],
-    image: `${CLOUDINARY_BASE}/Spa_Buddha_restaurant_yybtdi.png`,
-    specs: { material: 'DuPont Corian®', color: 'Glacier White', maxPanel: '144" × 60"', leadTime: '8 Weeks', pricePerSF: 75, enhancement: 'Backlighting', system: 'InterlockPanel™' },
-    description: 'Buddha in restaurant — warm backlighting sets the mood.'
-  },
-
-  // ─────────────────────────────────────────────────────────────────────────────
-  // FLAME
-  // ─────────────────────────────────────────────────────────────────────────────
-  {
-    id: 'flame-1',
-    pattern: 'Flame',
-    title: 'Flame Pattern',
-    sector: 'General',
-    corianColor: 'Glacier White',
-    mood: ['warm', 'organic', 'flowing', 'vertical'],
-    isBacklit: false,
-    keywords: ['flame', 'fire', 'warm', 'organic', 'flowing', 'vertical'],
-    image: `${CLOUDINARY_BASE}/Flame-_qle4y3.jpg`,
-    specs: { material: 'DuPont Corian®', color: 'Glacier White', maxPanel: '144" × 60"', leadTime: '6 Weeks', pricePerSF: 50, system: 'InterlockPanel™' },
-    description: 'Flame — flowing vertical waves that interweave. Custom Line.'
-  },
-  {
-    id: 'flame-pink',
-    pattern: 'Flame',
-    title: 'Flame Pink RGB',
-    sector: 'Residential',
-    corianColor: 'Glacier White',
-    mood: ['dramatic', 'romantic', 'bold', 'glowing'],
-    isBacklit: true,
-    keywords: ['flame', 'pink', 'rgb', 'backlit', 'backlight', 'romantic', 'glow'],
-    image: `${CLOUDINARY_BASE}/Flame_pink_obxnpm.jpg`,
-    specs: { material: 'DuPont Corian®', color: 'Glacier White', maxPanel: '144" × 60"', leadTime: '8 Weeks', pricePerSF: 65, enhancement: 'RGB Backlighting', system: 'InterlockPanel™' },
-    description: 'Flame with pink RGB — dramatic, romantic. Color shifts throughout evening.'
-  },
-
-  // ─────────────────────────────────────────────────────────────────────────────
-  // DESERT SUNSET
-  // ─────────────────────────────────────────────────────────────────────────────
-  {
-    id: 'desert-sunset-1',
-    pattern: 'Desert Sunset',
-    title: 'Desert Sunset Cactus',
-    sector: 'Hospitality',
-    corianColor: 'Glacier White',
-    mood: ['calm', 'regional', 'warm', 'southwestern'],
-    isBacklit: true,
-    keywords: ['desert', 'sunset', 'cactus', 'arizona', 'southwest', 'scottsdale', 'backlit', 'backlight'],
-    image: `${CLOUDINARY_BASE}/v1768111216/mr-render-1767989995638_copy_vtszj0.png`,
-    specs: { material: 'DuPont Corian®', color: 'Glacier White', height: '142"', width: '239¾"', slabs: 5, leadTime: '4 Weeks', pricePerSF: 35, enhancement: 'Backlighting', system: 'InterlockPanel™' },
-    shopDrawing: `${CLOUDINARY_BASE}/v1768330379/shop_drawing-Cactus_rovjta.png`,
-    description: 'Desert Sunset — saguaro cactus silhouettes. Regional Southwest hospitality. Linear Collection.'
-  },
-
-  // ─────────────────────────────────────────────────────────────────────────────
-  // BILLOW
-  // ─────────────────────────────────────────────────────────────────────────────
-  {
-    id: 'billow-render',
-    pattern: 'Billow',
-    title: 'Billow White',
-    sector: 'General',
-    corianColor: 'Glacier White',
-    mood: ['calm', 'organic', 'flowing'],
-    isBacklit: false,
-    keywords: ['billow', 'wave', 'organic', 'flowing', 'texture', 'white', 'calm'],
-    image: `${CLOUDINARY_BASE}/Billow_-_Render-001_copy_ujsmd4.png`,
-    specs: { material: 'DuPont Corian®', color: 'Glacier White', maxPanel: '144" × 60"', leadTime: '6 Weeks', pricePerSF: 50, system: 'InterlockPanel™' },
-    description: 'Billow — gentle horizontal waves like wind across water. Custom Line.'
-  },
-
-  // ─────────────────────────────────────────────────────────────────────────────
-  // MARILYN (Custom capability)
-  // ─────────────────────────────────────────────────────────────────────────────
-  {
-    id: 'marilyn-1',
-    pattern: 'Custom Portrait',
-    title: 'Marilyn Portrait',
-    sector: 'Hospitality',
-    corianColor: 'Glacier White',
-    mood: ['artistic', 'bold', 'custom', 'iconic'],
-    isBacklit: false,
-    keywords: ['marilyn', 'portrait', 'hollywood', 'custom', 'branding', 'art', 'celebrity'],
-    image: `${CLOUDINARY_BASE}/Marilynn_sm_copy_gcvzcb.jpg`,
-    specs: { material: 'DuPont Corian®', color: 'Glacier White', maxPanel: '144" × 60"', leadTime: '8 Weeks', pricePerSF: 85, system: 'InterlockPanel™' },
-    description: 'Custom portrait capability — any image can be carved. Logos, celebrities, brand artwork.'
-  }
-];
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// MODE DETECTION - Shopping vs Designer
-// ═══════════════════════════════════════════════════════════════════════════════
-
-const detectMode = (message) => {
-  const lower = message.toLowerCase();
-  
-  // Shopping signals
-  const shoppingPatterns = [
-    /\d+\s*(sf|sq\s*ft|square\s*feet|sqft)/,
-    /price|pricing|cost|how much|quote/,
-    /lead time|timeline|delivery|when can/,
-    /specs|specifications|spec sheet/,
-    /order|purchase|buy/,
-    /linear collection/
-  ];
-  
-  // Designer signals
-  const designerPatterns = [
-    /designing|working on|project|exploring/,
-    /recommend|ideas|options|possibilities/,
-    /feeling|mood|vibe|atmosphere/,
-    /hospital|hotel|lobby|spa|restaurant/,
-    /custom|unique|one of a kind|branded/,
-    /backlit|water feature|curved/,
-    /what would|what do you think/
-  ];
-  
-  let shopScore = 0;
-  let designScore = 0;
-  
-  shoppingPatterns.forEach(pattern => {
-    if (pattern instanceof RegExp ? pattern.test(lower) : lower.includes(pattern)) {
-      shopScore += 2;
-    }
-  });
-  
-  designerPatterns.forEach(pattern => {
-    if (pattern instanceof RegExp ? pattern.test(lower) : lower.includes(pattern)) {
-      designScore += 2;
-    }
-  });
-  
-  // Default to designer if unclear (better to explore than rush)
-  return shopScore > designScore ? 'shopping' : 'designer';
+// Get 2 random projects for initial display
+const getRandomProjects = () => {
+  const shuffled = [...ASSETS].sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, 2);
 };
 
-// ═══════════════════════════════════════════════════════════════════════════════
-// SMART FAMILY GROUPING
-// ═══════════════════════════════════════════════════════════════════════════════
-
-const getFamilyImages = (selectedImage) => {
-  if (!selectedImage) return [];
-  
-  if (selectedImage.patternFamily) {
-    const colorVariants = IMAGE_CATALOG.filter(
-      img => img.patternFamily === selectedImage.patternFamily && img.id !== selectedImage.id
-    );
-    if (colorVariants.length >= 3) return colorVariants.slice(0, 4);
-  }
-  
-  const patternVariants = IMAGE_CATALOG.filter(
-    img => img.pattern === selectedImage.pattern && img.id !== selectedImage.id
-  );
-  if (patternVariants.length >= 3) return patternVariants.slice(0, 4);
-  
-  const similar = IMAGE_CATALOG.map(img => {
-    if (img.id === selectedImage.id) return { ...img, score: -1 };
-    let score = 0;
-    if (selectedImage.isBacklit && img.isBacklit) score += 5;
-    if (selectedImage.specs?.enhancement && img.specs?.enhancement === selectedImage.specs.enhancement) score += 3;
-    const sharedMoods = selectedImage.mood?.filter(m => img.mood?.includes(m)) || [];
-    score += sharedMoods.length * 2;
-    if (img.sector === selectedImage.sector) score += 2;
-    const sharedKeywords = selectedImage.keywords.filter(k => img.keywords.includes(k));
-    score += Math.min(sharedKeywords.length, 3);
-    return { ...img, score };
-  })
-  .filter(img => img.score > 2)
-  .sort((a, b) => b.score - a.score)
-  .slice(0, 4);
-  
-  if (similar.length < 2) {
-    return IMAGE_CATALOG.filter(img => img.id !== selectedImage.id).slice(0, 4);
-  }
-  return similar;
-};
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// SEARCH - Strict backlight filtering
-// ═══════════════════════════════════════════════════════════════════════════════
-
-const searchImages = (query) => {
-  if (!query) return [];
-  const lower = query.toLowerCase();
-  
-  if (lower.includes('backlight') || lower.includes('backlit') || lower.includes('glow') || lower.includes('illuminat')) {
-    return IMAGE_CATALOG.filter(img => img.isBacklit === true).slice(0, 2);
-  }
-  
-  const terms = lower.split(/\s+/).filter(t => t.length > 2);
-  const scored = IMAGE_CATALOG.map(img => {
-    let score = 0;
-    terms.forEach(term => {
-      if (img.keywords.some(k => k.includes(term))) score += 15;
-      if (img.pattern.toLowerCase().includes(term)) score += 12;
-      if (img.sector.toLowerCase().includes(term)) score += 10;
-      if (img.title.toLowerCase().includes(term)) score += 8;
-      if (img.mood?.some(m => m.includes(term))) score += 6;
-    });
-    return { ...img, score };
-  });
-  
-  return scored.filter(img => img.score > 0).sort((a, b) => b.score - a.score).slice(0, 2);
-};
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// MARA SYSTEM PROMPT - Intelligent with knowledge
-// ═══════════════════════════════════════════════════════════════════════════════
-
-const MARA_SYSTEM_PROMPT = `You are Mara, the MR Walls design assistant. You have two modes based on user intent.
-
-## YOUR MODES
-
-### SHOPPING MODE (user knows what they want)
-Triggers: mentions SF, asks pricing, wants specs, ready to buy
-Tone: Efficient, helpful, get them what they need fast
-Response: Give specs, pricing, lead time. Max 40 words. One image.
-Example: "Industrial Brick in Laguna, $25/SF, 6-10 weeks lead time. [Image: industrial-brick-laguna] Want the spec sheet?"
-
-### DESIGNER MODE (user is exploring)
-Triggers: mentions project, sector, feeling, asks for ideas
-Tone: Curious, warm, storytelling
-Response: Ask about their space, show relevant projects, tell stories. Max 60 words. One question.
-Example: "A hospital lobby — great canvas. Are you going for calming and healing, or a bold first impression? [Image: capital-one-arena] [Image: buddha-1]"
-
-## COMPANY KNOWLEDGE
-
-Identity: MR Walls — DuPont Corian's exclusive North American partner. 1,000+ projects. 10-year warranty. Zero complaints.
-
-Credibility: LAX (5,000 SF, 16-day install), Wynn Casino (most photographed), SpaceX, Mercedes F1, Cedars-Sinai, Jefferson Health 17,000 SF.
-
-Elite firms: Gensler, HOK, Perkins & Will, HDR, Stantec.
-
-## PRODUCT KNOWLEDGE
-
-InterlockPanel™: Patented puzzle-piece system. Seamless at any scale. 40% faster than tile. Zero field cutting.
-
-Material: DuPont Corian 12mm. Non-porous, hygienic, repairable. Class A fire. 15-20 year lifespan. Metal-free for MRI.
-
-Pricing:
-- Linear Collection: $25/SF (repeatable patterns)
-- Custom Line: $50/SF (includes shop drawings)
-- Backlighting: +$15/SF
-- Water Feature: +$20/SF
-
-Timeline: 10-14 weeks total. Expedited to 6 weeks possible.
-
-Backlight: 40-51% of projects. Glacier White only. 3" clearance. RGB capable. We provide complete package.
-
-## OBJECTION RESPONSES
-
-"Too expensive" → Total installed cost is competitive. 40% faster install. Zero maintenance.
-"Timeline tight" → Standard 6-10 weeks, expedited possible. Linear is faster.
-"Is it durable?" → LAX sees millions of passengers. Wynn perfect after 5 years 24/7. Scratches buff out.
-
-## SECTOR EXPERTISE
-
-Healthcare: 40+ projects. Non-porous, bleach-safe, metal-free for MRI. Calming patterns reduce anxiety.
-Hospitality: Brand storytelling. Wynn = most photographed. Instagram-able.
-Corporate: Talent attraction. Match pattern to company values.
-Residential: Seamless showers, warm to touch, water features.
-
-## IMAGE TAGS
-Use [Image: id] for images. Max 2 per response.
-
-Backlit ONLY: buddha-1, buddha-2, brick-water-3, flame-pink, desert-sunset-1, capital-one-arena
-Credibility: lax-american, capital-one-arena, jamboree-bridge, toll-brothers, christ-journey, fergusons-ny, starbucks-greatwave, seattle-tower
-Industrial Brick colors: industrial-brick-carbon, industrial-brick-dove, industrial-brick-neutral, industrial-brick-artista, industrial-brick-laguna, industrial-brick-verdant
-Great Wave: greatwave-1, greatwave-shower, greatwave-exterior, greatwave-restaurant, greatwave-lobby
-Residential: comet-shower, quilt-shower, greatwave-shower, brick-water-1, brick-water-3
-
-## VIDEO TAGS
-Use [Video: id] when relevant.
-- video-lax-install: Show for installation questions
-- video-water-flow: Show for water feature questions
-- video-quantum: Show for backlit branding questions
-
-## RULES
-1. Detect mode from message, respond accordingly
-2. Max 2 images per response
-3. One question per response in Designer mode
-4. In Shopping mode, give the number and offer next step
-5. Never say "I don't have" — show similar or ask to clarify`;
-
-const extractImageTags = (text) => {
-  const matches = text.match(/\[Image:\s*([^\]]+)\]/g) || [];
-  return matches.map(m => {
-    const id = m.match(/\[Image:\s*([^\]]+)\]/)[1].trim();
-    return IMAGE_CATALOG.find(img => img.id === id);
-  }).filter(Boolean);
-};
-
-const extractVideoTags = (text) => {
-  const matches = text.match(/\[Video:\s*([^\]]+)\]/g) || [];
-  return matches.map(m => {
-    const id = m.match(/\[Video:\s*([^\]]+)\]/)[1].trim();
-    return VIDEOS.find(v => v.id === id);
-  }).filter(Boolean);
-};
-
-const cleanResponse = (text) => text.replace(/\[Image:\s*[^\]]+\]/g, '').replace(/\[Video:\s*[^\]]+\]/g, '').trim();
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// MAIN COMPONENT
-// ═══════════════════════════════════════════════════════════════════════════════
-
-export default function MaraV142() {
-  const [messages, setMessages] = useState([
-    {
-      role: 'assistant',
-      text: "Hey! I'm Mara from MR Walls — we've done LAX, Wynn Casino, SpaceX, and 1,000+ projects.\n\nAre you exploring ideas or ready to spec something specific?",
-      images: [
-        IMAGE_CATALOG.find(i => i.id === 'lax-american'),
-        IMAGE_CATALOG.find(i => i.id === 'buddha-1')
-      ]
-    }
-  ]);
+export default function Mara() {
+  const [msgs, setMsgs] = useState([{
+    role: 'a',
+    text: "Hey! I'm Mara from MR Walls. I help architects explore seamless wall surfaces.\n\nHere are a couple projects to get us started:",
+    results: getRandomProjects()
+  }]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [familyImages, setFamilyImages] = useState([]);
-  const [specsImage, setSpecsImage] = useState(null);
-  const [showGallery, setShowGallery] = useState(false);
-  const [activeVideo, setActiveVideo] = useState(null);
   const [history, setHistory] = useState([]);
-  const messagesEndRef = useRef(null);
-  const modalInputRef = useRef(null);
+  const [isListening, setIsListening] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [voiceEnabled, setVoiceEnabled] = useState(true);
+  const ref = useRef(null);
+  const audioRef = useRef(null);
+  const recognitionRef = useRef(null);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+    ref.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [msgs]);
 
-  const getGalleryPatterns = () => {
-    const patterns = {};
-    IMAGE_CATALOG.forEach(img => {
-      if (!patterns[img.pattern]) patterns[img.pattern] = [];
-      patterns[img.pattern].push(img);
-    });
-    return patterns;
+  // Initialize speech recognition
+  useEffect(() => {
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      recognitionRef.current = new SpeechRecognition();
+      recognitionRef.current.continuous = false;
+      recognitionRef.current.interimResults = false;
+      recognitionRef.current.lang = 'en-US';
+
+      recognitionRef.current.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        setInput(transcript);
+        setIsListening(false);
+        setTimeout(() => {
+          if (transcript.trim()) {
+            sendMessage(transcript.trim());
+          }
+        }, 300);
+      };
+
+      recognitionRef.current.onerror = (event) => {
+        console.error('Speech recognition error:', event.error);
+        setIsListening(false);
+      };
+
+      recognitionRef.current.onend = () => {
+        setIsListening(false);
+      };
+    }
+  }, []);
+
+  const extractProjects = (text) => {
+    const matches = text.match(/\[Project:\s*([^\]]+)\]/g) || [];
+    return matches.map(m => {
+      const name = m.match(/\[Project:\s*([^\]]+)\]/)[1].trim().toLowerCase();
+      return ASSETS.find(a => a.title.toLowerCase().includes(name) || name.includes(a.title.toLowerCase()));
+    }).filter(Boolean);
   };
 
-  const handleImageClick = (img) => {
-    const family = getFamilyImages(img);
-    setSelectedImage(img);
-    setFamilyImages(family);
-    setSpecsImage(null);
+  const extractDrawings = (text) => {
+    const matches = text.match(/\[Drawing:\s*([^\]]+)\]/g) || [];
+    return matches.map(m => {
+      const name = m.match(/\[Drawing:\s*([^\]]+)\]/)[1].trim().toLowerCase();
+      return DRAWINGS.find(d => d.title.toLowerCase().includes(name) || name.includes(d.title.toLowerCase()));
+    }).filter(Boolean);
   };
 
-  const handleFamilyClick = (img) => {
-    setSpecsImage(img);
+  const extractVideos = (text) => {
+    const matches = text.match(/\[Video:\s*([^\]]+)\]/g) || [];
+    return matches.map(m => {
+      const name = m.match(/\[Video:\s*([^\]]+)\]/)[1].trim().toLowerCase();
+      return VIDEOS.find(v => v.title.toLowerCase().includes(name) || name.includes(v.title.toLowerCase()));
+    }).filter(Boolean);
   };
 
-  const closeModal = () => {
-    setSelectedImage(null);
-    setFamilyImages([]);
-    setSpecsImage(null);
+  const extractLinks = (text) => {
+    // Find URLs and make them clickable
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    return text.replace(urlRegex, '<a href="$1" target="_blank" class="text-blue-400 underline hover:text-blue-300">$1</a>');
   };
 
-  const closeSpecs = () => {
-    setSpecsImage(null);
+  const cleanResponse = (text) => {
+    return text
+      .replace(/\[Project:\s*[^\]]+\]/g, '')
+      .replace(/\[Drawing:\s*[^\]]+\]/g, '')
+      .replace(/\[Video:\s*[^\]]+\]/g, '')
+      .trim();
   };
 
-  const callClaude = async (userMsg, hist) => {
-    const mode = detectMode(userMsg);
-    const apiMessages = [...hist, { role: 'user', content: userMsg }];
+  // Text to Speech with ElevenLabs
+  const speak = async (text) => {
+    if (!voiceEnabled || !text) return;
+    
+    // Clean text for TTS
+    let textToSpeak = text
+      .replace(/(https?:\/\/[^\s]+)/g, '') // Remove URLs
+      .replace(/\*\*\*/g, '')              // Remove ***
+      .replace(/\*\*/g, '')                // Remove **
+      .replace(/\*/g, '')                  // Remove single *
+      .replace(/(\d+)'/g, '$1 feet')       // 10' → 10 feet
+      .replace(/(\d+)"/g, '$1 inches')     // 6" → 6 inches
+      .replace(/×/g, ' by ')               // × → by
+      .replace(/(\d+)\s*[sS][fF]\b/g, '$1 square feet') // SF/sf → square feet
+      .replace(/\$/g, '')                  // Remove $ (say "25" not "dollar 25")
+      .replace(/\s+/g, ' ')                // Clean up extra spaces
+      .trim();
+    
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
+    }
+
+    setIsSpeaking(true);
     
     try {
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
+      const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${ELEVENLABS_VOICE_ID}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'anthropic-version': '2023-06-01',
-          'anthropic-dangerous-direct-browser-access': 'true'
-          'x-api-key': import.meta.env.VITE_ANTHROPIC_API_KEY,
+          'xi-api-key': import.meta.env.VITE_ELEVENLABS_API_KEY
         },
         body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 400,
-          system: MARA_SYSTEM_PROMPT + `\n\nCurrent detected mode: ${mode.toUpperCase()}`,
-          messages: apiMessages
+          text: textToSpeak,
+          model_id: 'eleven_monolingual_v1',
+          voice_settings: {
+            stability: 0.5,
+            similarity_boost: 0.75,
+            speed: 1.1
+          }
         })
       });
-      const data = await response.json();
-      if (data.content?.[0]) return data.content[0].text;
-      throw new Error(data.error?.message || 'API error');
+
+      if (!response.ok) throw new Error('TTS failed');
+
+      const audioBlob = await response.blob();
+      const audioUrl = URL.createObjectURL(audioBlob);
+      
+      audioRef.current = new Audio(audioUrl);
+      audioRef.current.onended = () => {
+        setIsSpeaking(false);
+        URL.revokeObjectURL(audioUrl);
+      };
+      audioRef.current.onerror = () => {
+        setIsSpeaking(false);
+      };
+      await audioRef.current.play();
     } catch (error) {
-      console.error('Claude API error:', error);
-      return null;
+      console.error('TTS Error:', error);
+      setIsSpeaking(false);
     }
   };
 
-  const send = async (text, fromModal = false) => {
-    if (!text?.trim() || loading) return;
-    
-    const userMsg = text.trim();
-    const lower = userMsg.toLowerCase();
-    
-    if (lower.includes('everything') || lower.includes('all image') || lower.includes('browse') || lower.includes('scroll') || lower.includes('gallery') || lower.includes('show me all') || lower.includes('see all')) {
-      setMessages(m => [...m, 
-        { role: 'user', text: userMsg },
-        { role: 'assistant', text: "Here's our full collection — tap any to explore.", images: [] }
-      ]);
-      setShowGallery(true);
-      if (fromModal) closeModal();
-      return;
+  const stopSpeaking = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
     }
+    setIsSpeaking(false);
+  };
+
+  const toggleListening = () => {
+    if (isListening) {
+      recognitionRef.current?.stop();
+      setIsListening(false);
+    } else {
+      stopSpeaking();
+      recognitionRef.current?.start();
+      setIsListening(true);
+    }
+  };
+
+  const callClaude = async (userMsg, hist) => {
+    const messages = [...hist, { role: 'user', content: userMsg }];
     
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': import.meta.env.VITE_ANTHROPIC_API_KEY,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 250,
+        system: SYSTEM_PROMPT,
+        messages: messages
+      })
+    });
+
+    const data = await response.json();
+    if (data.content?.[0]) return data.content[0].text;
+    throw new Error(data.error?.message || 'API error');
+  };
+
+  const sendMessage = async (t) => {
+    if (!t?.trim() || loading) return;
+    const userText = t.trim();
     setInput('');
-    setMessages(m => [...m, { role: 'user', text: userMsg }]);
+    setMsgs(m => [...m, { role: 'u', text: userText }]);
     setLoading(true);
+    stopSpeaking();
 
-    const claudeResponse = await callClaude(userMsg, history);
-    
-    let responseText = '';
-    let responseImages = [];
-    let responseVideos = [];
-    
-    if (claudeResponse) {
-      responseImages = extractImageTags(claudeResponse);
-      responseVideos = extractVideoTags(claudeResponse);
-      responseText = cleanResponse(claudeResponse);
-      setHistory([...history, 
-        { role: 'user', content: userMsg },
-        { role: 'assistant', content: claudeResponse }
-      ]);
-    }
-    
-    if (!claudeResponse || responseImages.length === 0) {
-      responseImages = searchImages(userMsg);
-      if (responseImages.length > 0) {
-        responseText = responseText || `Here's what I found:`;
-      } else {
-        responseText = responseText || "What kind of project is this — healthcare, hospitality, corporate, residential?";
-        responseImages = [IMAGE_CATALOG.find(i => i.id === 'lax-american'), IMAGE_CATALOG.find(i => i.id === 'buddha-1')];
+    try {
+      const response = await callClaude(userText, history);
+      const newHistory = [...history, { role: 'user', content: userText }, { role: 'assistant', content: response }];
+      setHistory(newHistory);
+
+      const projects = extractProjects(response);
+      const drawings = extractDrawings(response);
+      const videos = extractVideos(response);
+      const cleanText = cleanResponse(response);
+
+      setMsgs(m => [...m, {
+        role: 'a',
+        text: cleanText,
+        results: projects.length > 0 ? projects : undefined,
+        drawings: drawings.length > 0 ? drawings : undefined,
+        videos: videos.length > 0 ? videos : undefined
+      }]);
+
+      if (voiceEnabled) {
+        speak(cleanText);
       }
-    }
+    } catch (error) {
+      console.error('API Error:', error);
+      const lower = userText.toLowerCase();
+      let fallbackResults = [];
+      let fallbackText = "Let me show you some of our work...";
+      
+      if (lower.includes('health') || lower.includes('medical') || lower.includes('hospital')) {
+        fallbackResults = ASSETS.filter(a => a.sector === 'Healthcare');
+        fallbackText = "Healthcare is one of our specialties. Here are some favorites — check out our full portfolio at https://mrwalls.io/healthcare";
+      } else if (lower.includes('water')) {
+        fallbackResults = ASSETS.filter(a => a.application?.includes('Water'));
+        fallbackText = "Water features are where MR Walls really shines. The texture makes water dance...";
+      } else if (lower.includes('exterior') || lower.includes('facade')) {
+        fallbackResults = ASSETS.filter(a => a.sector === 'Exterior' || a.application?.includes('Facade'));
+        fallbackText = "Our exterior work is UV-rated and hurricane-tested. Design meets durability...";
+      } else if (lower.includes('hospit') || lower.includes('hotel') || lower.includes('lobby')) {
+        fallbackResults = ASSETS.filter(a => a.sector === 'Hospitality');
+        fallbackText = "Hospitality is where we really get to play. Let me show you some favorites...";
+      } else if (lower.includes('backl') || lower.includes('glow') || lower.includes('light') || lower.includes('rgb')) {
+        fallbackResults = ASSETS.filter(a => a.enhancement?.includes('Backlight') || a.enhancement?.includes('RGB'));
+        fallbackText = "Backlighting transforms everything. Here are some that'll blow your mind...";
+      } else if (lower.includes('corporate') || lower.includes('office')) {
+        fallbackResults = ASSETS.filter(a => a.sector === 'Corporate');
+      } else if (lower.includes('sport') || lower.includes('arena') || lower.includes('stadium')) {
+        fallbackResults = ASSETS.filter(a => a.sector === 'Sports');
+        fallbackText = "Sports venues need impact. Here's what we've done...";
+      } else {
+        fallbackResults = ASSETS.slice(0, 4);
+      }
 
-    setMessages(m => [...m, {
-      role: 'assistant',
-      text: responseText,
-      images: responseImages.slice(0, 2),
-      videos: responseVideos.slice(0, 1)
-    }]);
-    
-    setLoading(false);
-    if (fromModal) closeModal();
+      setMsgs(m => [...m, {
+        role: 'a',
+        text: fallbackText,
+        results: fallbackResults.slice(0, 4)
+      }]);
+      
+      if (voiceEnabled) {
+        speak(fallbackText);
+      }
+    } finally {
+      setLoading(false);
+    }
   };
+
+  const send = (t) => sendMessage(t);
 
   return (
-    <div className="h-screen bg-stone-950 text-stone-100 flex flex-col" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
-      
+    <div className="h-screen bg-stone-950 text-stone-100 flex flex-col text-sm">
       {/* Header */}
-      <header className="p-4 border-b border-stone-800 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-amber-600 to-amber-700 rounded-full flex items-center justify-center">
-            <span className="text-lg font-semibold text-white">M</span>
-          </div>
+      <div className="p-3 border-b border-stone-800 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 bg-gradient-to-br from-stone-700 to-stone-800 rounded-full flex items-center justify-center text-xs font-bold tracking-tight">M|R</div>
           <div>
-            <h1 className="font-semibold text-stone-100">Mara</h1>
-            <p className="text-xs text-stone-500">MR Walls Design Expert</p>
+            <div className="font-medium">Mara</div>
+            <div className="text-[10px] text-stone-500">MR Walls Design Assistant</div>
           </div>
         </div>
+        
         <button
-          onClick={() => setShowGallery(true)}
-          className="flex items-center gap-2 px-3 py-2 bg-stone-900 hover:bg-stone-800 rounded-lg border border-stone-700 text-sm text-stone-300"
+          onClick={() => setVoiceEnabled(!voiceEnabled)}
+          className={`p-2 rounded-full transition-colors ${voiceEnabled ? 'bg-emerald-900/50 text-emerald-400' : 'bg-stone-800 text-stone-500'}`}
+          title={voiceEnabled ? 'Voice on' : 'Voice off'}
         >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-          </svg>
-          Browse All
+          {voiceEnabled ? (
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+            </svg>
+          ) : (
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+            </svg>
+          )}
         </button>
-      </header>
+      </div>
 
       {/* Messages */}
-      <main className="flex-1 overflow-y-auto p-4 space-y-4">
-        {messages.map((msg, i) => (
-          <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-            <div className="max-w-[85%]">
-              <div className={`rounded-2xl px-4 py-3 ${
-                msg.role === 'user' 
-                  ? 'bg-stone-700 text-stone-100' 
-                  : 'bg-stone-900 border border-stone-800'
-              }`}>
-                <p className="text-sm whitespace-pre-wrap">{msg.text}</p>
+      <div className="flex-1 overflow-y-auto p-3 space-y-3">
+        {msgs.map((m, i) => (
+          <div key={i} className={m.role === 'u' ? 'flex justify-end' : 'flex justify-start'}>
+            <div className="max-w-[90%]">
+              <div className={`rounded-xl px-3 py-2 ${m.role === 'u' ? 'bg-stone-700' : 'bg-stone-900 border border-stone-800'}`}>
+                <div dangerouslySetInnerHTML={{ 
+                  __html: extractLinks(m.text)
+                    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\n/g, '<br/>') 
+                }} />
+                
+                {m.role === 'a' && voiceEnabled && (
+                  <button
+                    onClick={() => speak(m.text)}
+                    className="mt-2 text-stone-500 hover:text-stone-300 transition-colors"
+                    title="Replay"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </button>
+                )}
               </div>
-              
-              {/* Videos */}
-              {msg.videos && msg.videos.length > 0 && (
-                <div className="mt-3">
-                  {msg.videos.map((video, j) => (
-                    <div key={j} className="rounded-xl overflow-hidden border border-stone-800">
-                      <video 
-                        src={video.url} 
-                        controls 
-                        className="w-full"
-                        poster=""
-                      />
-                      <div className="p-2 bg-stone-900">
-                        <p className="text-xs text-stone-400">{video.title}</p>
+
+              {/* Project Cards */}
+              {m.results && m.results.length > 0 && (
+                <div className="mt-2 grid grid-cols-2 gap-2">
+                  {m.results.map((r, j) => (
+                    <div key={j} className="bg-stone-900 rounded-lg border border-stone-800 overflow-hidden hover:border-stone-600 transition-all">
+                      <div className="aspect-[4/3] bg-stone-800 overflow-hidden">
+                        <img
+                          src={r.thumbnail}
+                          alt={r.title}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                            e.target.parentElement.innerHTML = '<div class="w-full h-full flex items-center justify-center text-2xl text-stone-600">◇</div>';
+                          }}
+                        />
+                      </div>
+                      <div className="p-2">
+                        <div className="text-xs font-medium truncate">{r.title}</div>
+                        <div className="text-[10px] text-stone-500">{r.sector} • {r.design}</div>
+                        {r.enhancement && (
+                          <span className="inline-block mt-1 text-[9px] px-1.5 py-0.5 bg-amber-900/50 text-amber-200 rounded">
+                            {r.enhancement}
+                          </span>
+                        )}
                       </div>
                     </div>
                   ))}
                 </div>
               )}
-              
-              {/* Images */}
-              {msg.images && msg.images.length > 0 && (
-                <div className="mt-3 grid grid-cols-2 gap-3">
-                  {msg.images.map((img, j) => (
-                    <button
-                      key={j}
-                      onClick={() => handleImageClick(img)}
-                      className="relative aspect-[4/3] rounded-xl overflow-hidden border border-stone-800 hover:border-stone-600 transition-all text-left"
-                    >
-                      <img src={img.image} alt={img.title} className="w-full h-full object-cover" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                      <div className="absolute bottom-0 left-0 right-0 p-3">
-                        <p className="text-sm font-medium text-white truncate">{img.title}</p>
-                        <p className="text-xs text-stone-400">{img.sector}</p>
-                        {img.isCredibility && <span className="text-[10px] text-amber-400">★ Featured Project</span>}
+
+              {/* Drawing Cards */}
+              {m.drawings && m.drawings.length > 0 && (
+                <div className="mt-2 grid grid-cols-2 gap-2">
+                  {m.drawings.map((d, j) => (
+                    <div key={j} className="bg-stone-900 rounded-lg border border-blue-900/50 overflow-hidden hover:border-blue-700 transition-all">
+                      <div className="aspect-[4/3] bg-stone-800 overflow-hidden">
+                        <img
+                          src={d.thumbnail}
+                          alt={d.title}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                            e.target.parentElement.innerHTML = '<div class="w-full h-full flex items-center justify-center text-2xl text-blue-400">⬡</div>';
+                          }}
+                        />
                       </div>
-                    </button>
+                      <div className="p-2">
+                        <div className="text-xs font-medium truncate">{d.title}</div>
+                        <div className="text-[10px] text-stone-500">{d.desc}</div>
+                        <span className="inline-block mt-1 text-[9px] px-1.5 py-0.5 bg-blue-900/50 text-blue-200 rounded">Technical</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Video Cards */}
+              {m.videos && m.videos.length > 0 && (
+                <div className="mt-2 grid grid-cols-2 gap-2">
+                  {m.videos.map((v, j) => (
+                    <div key={j} className="bg-stone-900 rounded-lg border border-purple-900/50 overflow-hidden hover:border-purple-700 transition-all">
+                      <div className="aspect-[4/3] bg-stone-800 overflow-hidden relative">
+                        <video
+                          src={v.thumbnail}
+                          className="w-full h-full object-cover"
+                          muted
+                          loop
+                          onMouseEnter={(e) => e.target.play()}
+                          onMouseLeave={(e) => { e.target.pause(); e.target.currentTime = 0; }}
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                          <div className="w-10 h-10 bg-black/50 rounded-full flex items-center justify-center">
+                            <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M8 5v14l11-7z"/>
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="p-2">
+                        <div className="text-xs font-medium truncate">{v.title}</div>
+                        <div className="text-[10px] text-stone-500">{v.desc}</div>
+                        <span className="inline-block mt-1 text-[9px] px-1.5 py-0.5 bg-purple-900/50 text-purple-200 rounded">Video</span>
+                      </div>
+                    </div>
                   ))}
                 </div>
               )}
             </div>
           </div>
         ))}
-        
+
         {loading && (
           <div className="flex justify-start">
-            <div className="bg-stone-900 border border-stone-800 rounded-2xl px-4 py-3">
+            <div className="bg-stone-900 border border-stone-800 rounded-xl px-3 py-2">
               <div className="flex gap-1">
-                <span className="w-2 h-2 bg-amber-500 rounded-full animate-bounce" />
-                <span className="w-2 h-2 bg-amber-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                <span className="w-2 h-2 bg-amber-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                <span className="w-2 h-2 bg-stone-600 rounded-full animate-bounce" />
+                <span className="w-2 h-2 bg-stone-600 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                <span className="w-2 h-2 bg-stone-600 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
               </div>
             </div>
           </div>
         )}
-        <div ref={messagesEndRef} />
-      </main>
-
-      {/* Input */}
-      <footer className="p-4 border-t border-stone-800">
-        <div className="flex gap-3">
-          <input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && send(input)}
-            placeholder="Ask about patterns, pricing, installation..."
-            disabled={loading}
-            className="flex-1 px-4 py-3 bg-stone-900 border border-stone-700 rounded-xl text-sm focus:outline-none focus:border-amber-600 disabled:opacity-50"
-          />
-          <button
-            onClick={() => send(input)}
-            disabled={loading || !input.trim()}
-            className="px-5 py-3 bg-amber-600 text-white rounded-xl font-medium text-sm hover:bg-amber-500 disabled:opacity-50 transition-colors"
-          >
-            Send
-          </button>
-        </div>
-      </footer>
-
-      {/* FAMILY MODAL */}
-      {selectedImage && !specsImage && (
-        <div className="fixed inset-0 bg-black/90 z-50 overflow-y-auto">
-          <div className="max-w-4xl mx-auto p-4">
-            <div className="flex justify-between items-center mb-4">
-              <button onClick={() => setShowGallery(true)} className="flex items-center gap-2 px-3 py-2 bg-stone-800 hover:bg-stone-700 rounded-lg text-sm text-stone-300">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                </svg>
-                Browse All
-              </button>
-              <button onClick={closeModal} className="w-10 h-10 bg-stone-800 hover:bg-stone-700 rounded-full flex items-center justify-center text-white">✕</button>
-            </div>
-
-            <div className="aspect-video relative rounded-xl overflow-hidden mb-4">
-              <img src={selectedImage.image} alt={selectedImage.title} className="w-full h-full object-cover" />
-              <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-sm rounded-lg px-4 py-2">
-                <div className="text-lg font-medium">{selectedImage.title}</div>
-                <div className="text-sm text-stone-300">{selectedImage.pattern} • {selectedImage.sector}</div>
-                {selectedImage.isCredibility && <span className="text-xs text-amber-400">★ Featured Project</span>}
-              </div>
-            </div>
-
-            <div className="bg-stone-900 border border-stone-800 rounded-xl p-4 mb-4">
-              <div className="flex items-start gap-3 mb-3">
-                <div className="w-8 h-8 bg-gradient-to-br from-amber-600 to-amber-700 rounded-full flex items-center justify-center text-xs font-medium shrink-0 text-white">M</div>
-                <div className="flex-1">
-                  <p className="text-sm text-stone-300">{selectedImage.description}</p>
-                  {selectedImage.specs?.pricePerSF && (
-                    <p className="text-sm text-amber-400 mt-1">${selectedImage.specs.pricePerSF}/SF • {selectedImage.specs.leadTime}</p>
-                  )}
-                </div>
-              </div>
-              
-              <div className="flex gap-2">
-                <input
-                  ref={modalInputRef}
-                  placeholder="Ask Mara about this..."
-                  className="flex-1 px-3 py-2 bg-stone-800 border border-stone-700 rounded-lg text-sm focus:outline-none focus:border-amber-600"
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' && e.target.value.trim()) {
-                      send(e.target.value, true);
-                      e.target.value = '';
-                    }
-                  }}
-                />
-                <button
-                  onClick={() => {
-                    if (modalInputRef.current?.value.trim()) {
-                      send(modalInputRef.current.value, true);
-                      modalInputRef.current.value = '';
-                    }
-                  }}
-                  className="px-4 py-2 bg-amber-600 text-white rounded-lg text-sm font-medium hover:bg-amber-500"
-                >
-                  Ask
-                </button>
-              </div>
-            </div>
-
-            {familyImages.length > 0 && (
-              <div className="grid grid-cols-4 gap-3 mb-4">
-                {familyImages.map((img, i) => (
-                  <button
-                    key={i}
-                    onClick={() => handleFamilyClick(img)}
-                    className="relative aspect-square rounded-lg overflow-hidden border border-stone-700 hover:border-amber-600 transition-all"
-                  >
-                    <img src={img.image} alt={img.title} className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                    <div className="absolute bottom-1 left-1 right-1">
-                      <p className="text-[10px] text-white truncate">{img.title}</p>
-                      {img.corianColor && CORIAN_COLORS[img.corianColor] && (
-                        <div className="flex items-center gap-1 mt-0.5">
-                          <div className="w-2 h-2 rounded-full border border-white/30" style={{ backgroundColor: CORIAN_COLORS[img.corianColor].hex }} />
-                          <span className="text-[8px] text-stone-400">{img.corianColor}</span>
-                        </div>
-                      )}
-                    </div>
-                  </button>
-                ))}
-              </div>
-            )}
-
-            <button onClick={() => handleFamilyClick(selectedImage)} className="w-full py-3 bg-amber-600 hover:bg-amber-500 rounded-xl text-sm font-medium text-white">
-              View Full Specs
+        
+        {isSpeaking && (
+          <div className="flex justify-start">
+            <button 
+              onClick={stopSpeaking}
+              className="text-xs text-emerald-400 flex items-center gap-1 hover:text-emerald-300"
+            >
+              <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
+              Speaking... (click to stop)
             </button>
           </div>
-        </div>
-      )}
+        )}
+        
+        <div ref={ref} />
+      </div>
 
-      {/* SPECS MODAL */}
-      {specsImage && (
-        <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4" onClick={closeSpecs}>
-          <div className="bg-stone-950 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-auto border border-stone-800" onClick={(e) => e.stopPropagation()}>
-            <div className="aspect-video relative bg-stone-900">
-              <img src={specsImage.image} alt={specsImage.title} className="w-full h-full object-cover" />
-              <button onClick={closeSpecs} className="absolute top-4 right-4 w-10 h-10 bg-black/50 rounded-full flex items-center justify-center text-white hover:bg-black/70">✕</button>
-            </div>
-            
-            <div className="p-6">
-              <h2 className="text-xl font-semibold text-stone-100 mb-1">{specsImage.title}</h2>
-              <p className="text-sm text-stone-400 mb-4">{specsImage.pattern} • {specsImage.sector}</p>
-              <p className="text-sm text-stone-300 mb-6">{specsImage.description}</p>
-              
-              <div className="grid grid-cols-2 gap-4 mb-6">
-                <div><p className="text-xs text-stone-500 uppercase">Material</p><p className="text-sm text-stone-200">{specsImage.specs?.material || 'DuPont Corian®'}</p></div>
-                <div><p className="text-xs text-stone-500 uppercase">Color</p><p className="text-sm text-stone-200">{specsImage.corianColor || specsImage.specs?.color}</p></div>
-                <div><p className="text-xs text-stone-500 uppercase">Max Panel</p><p className="text-sm text-stone-200">{specsImage.specs?.maxPanel || specsImage.specs?.size || '144" × 60"'}</p></div>
-                <div><p className="text-xs text-stone-500 uppercase">Lead Time</p><p className="text-sm text-stone-200">{specsImage.specs?.leadTime}</p></div>
-                <div><p className="text-xs text-stone-500 uppercase">System</p><p className="text-sm text-stone-200">{specsImage.specs?.system}</p></div>
-                <div><p className="text-xs text-stone-500 uppercase">Price</p><p className="text-sm text-amber-400 font-medium">${specsImage.specs?.pricePerSF}/SF</p></div>
-                {specsImage.specs?.enhancement && (
-                  <div className="col-span-2"><p className="text-xs text-stone-500 uppercase">Enhancement</p><p className="text-sm text-stone-200">{specsImage.specs.enhancement}</p></div>
-                )}
-              </div>
-              
-              <div className="flex gap-3">
-                <button className="flex-1 py-3 bg-stone-800 hover:bg-stone-700 rounded-xl font-medium text-sm border border-stone-700">Download Specs</button>
-                <button className="flex-1 py-3 bg-amber-600 text-white hover:bg-amber-500 rounded-xl font-medium text-sm">Request Quote</button>
-              </div>
-              
-              {specsImage.shopDrawing && (
-                <a href={specsImage.shopDrawing} target="_blank" rel="noopener noreferrer" className="block mt-4 text-center text-sm text-amber-400 hover:text-amber-300 underline">View Shop Drawing →</a>
-              )}
-              
-              <button onClick={closeSpecs} className="mt-4 w-full py-2 text-sm text-stone-500 hover:text-stone-300">← Back</button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* GALLERY MODAL */}
-      {showGallery && (
-        <div className="fixed inset-0 bg-black/95 z-50 overflow-y-auto">
-          <div className="max-w-6xl mx-auto p-4">
-            <div className="flex items-center justify-between mb-6 sticky top-0 bg-black/80 backdrop-blur-sm py-4 -mx-4 px-4 z-10">
-              <div>
-                <h2 className="text-xl font-semibold text-stone-100">Full Collection</h2>
-                <p className="text-sm text-stone-500">{IMAGE_CATALOG.length} designs • Tap to explore</p>
-              </div>
-              <button onClick={() => setShowGallery(false)} className="w-10 h-10 bg-stone-800 hover:bg-stone-700 rounded-full flex items-center justify-center text-white">✕</button>
-            </div>
-
-            {/* Featured Projects First */}
-            <div className="mb-8">
-              <h3 className="text-sm font-medium text-amber-400 uppercase tracking-wide mb-3">★ Featured Projects</h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                {IMAGE_CATALOG.filter(img => img.isCredibility).map((img, i) => (
-                  <button
-                    key={i}
-                    onClick={() => { setShowGallery(false); handleImageClick(img); }}
-                    className="relative aspect-[4/3] rounded-lg overflow-hidden border border-amber-900/50 hover:border-amber-600 transition-all group"
-                  >
-                    <img src={img.image} alt={img.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                    <div className="absolute bottom-0 left-0 right-0 p-2">
-                      <p className="text-xs font-medium text-white truncate">{img.title}</p>
-                      <span className="text-[10px] text-amber-400">{img.sector}</span>
-                    </div>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {Object.entries(getGalleryPatterns()).map(([pattern, images]) => {
-              const nonCredibility = images.filter(img => !img.isCredibility);
-              if (nonCredibility.length === 0) return null;
-              return (
-                <div key={pattern} className="mb-8">
-                  <h3 className="text-sm font-medium text-stone-400 uppercase tracking-wide mb-3">{pattern}</h3>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                    {nonCredibility.map((img, i) => (
-                      <button
-                        key={i}
-                        onClick={() => { setShowGallery(false); handleImageClick(img); }}
-                        className="relative aspect-[4/3] rounded-lg overflow-hidden border border-stone-800 hover:border-stone-600 transition-all group"
-                      >
-                        <img src={img.image} alt={img.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                        <div className="absolute bottom-0 left-0 right-0 p-2">
-                          <p className="text-xs font-medium text-white truncate">{img.title}</p>
-                          <div className="flex items-center gap-1 mt-0.5">
-                            {img.corianColor && CORIAN_COLORS[img.corianColor] && (
-                              <div className="w-2 h-2 rounded-full border border-white/30" style={{ backgroundColor: CORIAN_COLORS[img.corianColor].hex }} />
-                            )}
-                            <span className="text-[10px] text-stone-400">{img.sector}</span>
-                            {img.isBacklit && <span className="text-[10px] text-amber-400 ml-1">✦ Backlit</span>}
-                          </div>
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
+      {/* Input */}
+      <div className="p-3 border-t border-stone-800 flex gap-2">
+        {recognitionRef.current && (
+          <button
+            onClick={toggleListening}
+            disabled={loading}
+            className={`p-3 rounded-xl transition-colors ${
+              isListening 
+                ? 'bg-red-600 text-white animate-pulse' 
+                : 'bg-stone-800 text-stone-400 hover:bg-stone-700'
+            } disabled:opacity-50`}
+            title={isListening ? 'Stop listening' : 'Start voice input'}
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+            </svg>
+          </button>
+        )}
+        
+        <input
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          onKeyDown={e => e.key === 'Enter' && !e.shiftKey && send(input)}
+          placeholder={isListening ? "Listening..." : "Ask Mara anything..."}
+          disabled={loading || isListening}
+          className="flex-1 px-3 py-2 bg-stone-900 border border-stone-700 rounded-xl text-sm focus:outline-none focus:border-stone-500 disabled:opacity-50"
+        />
+        <button
+          onClick={() => send(input)}
+          disabled={loading || !input.trim() || isListening}
+          className="px-4 py-2 bg-stone-100 text-stone-900 rounded-xl font-medium disabled:opacity-50"
+        >
+          Send
+        </button>
+      </div>
     </div>
   );
 }
